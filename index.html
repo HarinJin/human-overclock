@@ -656,19 +656,23 @@
   .bio-panel {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: repeat(2, auto);
+    grid-template-rows: 1fr 1fr;
     gap: 8px;
-    align-content: center;
-    width: 240px;
+    width: 220px;
     flex-shrink: 0;
+    align-self: stretch;
   }
 
   .bio-item {
     text-align: center;
-    padding: 12px 6px;
+    padding: 14px 8px;
     background: rgba(var(--accent-rgb), 0.02);
     border: 1px solid rgba(var(--accent-rgb), 0.06);
     transition: all 0.3s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
   }
 
   .bio-label {
@@ -706,6 +710,15 @@
   .brain-svg-container svg {
     max-width: 100%;
     max-height: 320px;
+  }
+
+  .right-panel {
+    width: 120px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-self: stretch;
   }
 
   /* Brain SVG region animations (Improvement #3) */
@@ -749,7 +762,7 @@
 
   /* ── Calorie gauge (Improvement #4) ── */
   .calorie-gauge {
-    width: 60px;
+    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -819,6 +832,38 @@
     font-family: 'Orbitron', sans-serif;
     font-size: 10px;
     opacity: 0.6;
+  }
+
+  .clock-side-display {
+    text-align: center;
+    padding: 12px 0;
+    border: 1px solid rgba(var(--accent-rgb), 0.08);
+    background: rgba(var(--accent-rgb), 0.02);
+    flex-shrink: 0;
+  }
+
+  .clock-side-value {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 36px;
+    font-weight: 900;
+    color: var(--accent);
+    line-height: 1;
+    text-shadow: 0 0 20px rgba(var(--accent-rgb), 0.4);
+  }
+
+  .clock-side-unit {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 12px;
+    opacity: 0.5;
+    margin-top: 4px;
+    letter-spacing: 3px;
+  }
+
+  .clock-side-label {
+    font-size: 8px;
+    opacity: 0.3;
+    letter-spacing: 2px;
+    margin-top: 6px;
   }
 
   /* ── Neural wave canvas ── */
@@ -1079,19 +1124,19 @@
 
   .weight-loss-ticker {
     font-family: 'Orbitron', sans-serif;
-    font-size: 32px;
-    font-weight: 700;
+    font-size: 18px;
+    font-weight: 500;
     color: #ff2a5e;
-    margin-top: 12px;
+    margin-top: 10px;
     opacity: 0;
     transition: opacity 0.3s;
-    text-shadow: 0 0 20px rgba(255, 42, 94, 0.5);
-    letter-spacing: 2px;
+    text-shadow: 0 0 15px rgba(255, 42, 94, 0.4);
+    letter-spacing: 12px;
   }
 
   .weight-loss-ticker.visible {
     opacity: 1;
-    animation: weightFloat 2s ease-out infinite;
+    animation: weightFloat 2.5s ease-out infinite;
   }
 
   @keyframes weightFloat {
@@ -1170,6 +1215,46 @@
     100% { opacity: 0; }
   }
 
+  /* ── Warning background flood ── */
+  .warning-bg-flood {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.8s ease;
+  }
+
+  .warning-bg-flood.active {
+    opacity: 1;
+  }
+
+  .warning-bg-scroll {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    white-space: nowrap;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    line-height: 1.8;
+    color: #ff2a5e;
+    opacity: 0.15;
+    animation: warningScrollUp 30s linear infinite;
+    will-change: transform;
+  }
+
+  body[data-phase="critical"] .warning-bg-scroll {
+    opacity: 0.2;
+    color: #ff0040;
+    animation-duration: 15s;
+  }
+
+  @keyframes warningScrollUp {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-50%); }
+  }
+
   /* ── Responsive ── */
   @media (max-width: 768px) {
     .stats-grid { grid-template-columns: 1fr; }
@@ -1197,11 +1282,19 @@
       width: 100%;
       border-radius: 3px 0 0 3px;
     }
+    .right-panel { width: 100%; flex-direction: row; }
+    .clock-side-display { flex: 1; }
+    .calorie-gauge { flex: 1; }
   }
 </style>
 </head>
 <body data-phase="standard">
   <div class="glitch-overlay"></div>
+
+  <!-- Warning background flood — 수십 줄 경고 텍스트가 배경을 채움 -->
+  <div class="warning-bg-flood" id="warningBgFlood">
+    <div class="warning-bg-scroll" id="warningBgScroll"></div>
+  </div>
   <div class="red-flash-overlay"></div>
   <div class="h-glitch"></div>
   <div class="blackout-overlay" id="blackoutOverlay"></div>
@@ -1218,7 +1311,7 @@
   <div class="overclock-banner" id="overclockBanner">
     <div class="overclock-banner-text">CALORIE OVERCLOCK</div>
     <div class="overclock-banner-sub">NEURAL ENERGY DRAIN ACTIVE</div>
-    <div class="weight-loss-ticker" id="weightLossTicker">-20g</div>
+    <div class="weight-loss-ticker" id="weightLossTicker">LOSING WEIGHT... 0g</div>
   </div>
 
   <div class="main-container">
@@ -1306,14 +1399,21 @@
 <path class="brain-outline" d="M 182,196 C 192,198 202,196 212,194"/>
 </svg>
       </div>
-      <div class="calorie-gauge" id="calorieGauge">
-        <div class="calorie-label">KCAL</div>
-        <div class="calorie-bar-outer">
-          <div class="calorie-bar-fill" id="calorieBarFill" style="height: 100%"></div>
+      <div class="right-panel">
+        <div class="calorie-gauge" id="calorieGauge">
+          <div class="calorie-label">KCAL</div>
+          <div class="calorie-bar-outer">
+            <div class="calorie-bar-fill" id="calorieBarFill" style="height: 100%"></div>
+          </div>
+          <div class="calorie-value" id="calorieValue">2400</div>
+          <div class="calorie-kcal">KCAL</div>
+          <div class="calorie-percent" id="caloriePercent">100%</div>
         </div>
-        <div class="calorie-value" id="calorieValue">2400</div>
-        <div class="calorie-kcal">KCAL</div>
-        <div class="calorie-percent" id="caloriePercent">100%</div>
+        <div class="clock-side-display">
+          <div class="clock-side-value glitch-text" id="clockSideDisplay">1.0</div>
+          <div class="clock-side-unit">GHz</div>
+          <div class="clock-side-label">NEURAL CLOCK</div>
+        </div>
       </div>
     </section>
 
@@ -1513,8 +1613,9 @@ let logInterval = null;
 let neuralAnimFrame = null;
 let isShuttingDown = false;
 let sliderDisabledTimeout = null;
-let weightLossValue = 20;
+let weightLossValue = 0;
 let weightLossInterval = null;
+let currentWeightTickSpeed = 0;
 
 // Calorie state (Improvement #4)
 const CALORIE_MAX = 2400;
@@ -1558,9 +1659,40 @@ const calorieValueEl = document.getElementById('calorieValue');
 const caloriePercentEl = document.getElementById('caloriePercent');
 
 // ── Init ──
+function buildWarningFlood() {
+  const lines = [
+    '[WARNING] NEURAL OVERLOAD DETECTED ',
+    '[ERR] EMPATHY MODULE BYPASSED — EMOTIONAL BUFFER OVERFLOW ',
+    '[CRITICAL] 뉴럴 붕괴 임박 — NEURAL COLLAPSE IMMINENT ',
+    '[WARNING] 전두엽 과부하 — FRONTAL LOBE OVERLOAD ',
+    '[ERR] SYNAPTIC BURNOUT IN SECTORS 7-12 ',
+    '[CRITICAL] ABORT RECOMMENDED — OVERRIDE ACTIVE ',
+    '[WARNING] 감정 모듈 신호 저하 — EMPATHY SIGNAL DEGRADING ',
+    '[ERR] 기억 단편화 진행 중 — MEMORY FRAGMENTATION ',
+    '[CRITICAL] SUBJECT IDENTITY COHERENCE: 12% ',
+    '[WARNING] 코르티솔 임계 초과 — CORTISOL THRESHOLD EXCEEDED ',
+    '[ERR] PAIN SUPPRESSION AUTO-ENGAGED ',
+    '[CRITICAL] 해마 반응 소실 — HIPPOCAMPAL RESPONSE LOST ',
+  ];
+
+  const scrollEl = document.getElementById('warningBgScroll');
+  let html = '';
+  // Fill enough lines to cover 2x viewport height (for seamless scroll loop)
+  const totalLines = 80;
+  for (let i = 0; i < totalLines; i++) {
+    const line = lines[i % lines.length];
+    // Repeat the line horizontally to fill full width
+    const repeated = (line).repeat(8);
+    html += `<div>${repeated}</div>`;
+  }
+  // Duplicate for seamless loop
+  scrollEl.innerHTML = html;
+}
+
 function init() {
   buildStats();
   buildBiometrics();
+  buildWarningFlood();
   updateAll(1.0);
   startLogStream();
   startNeuralWave();
@@ -1621,6 +1753,10 @@ function updateAll(clock) {
   // Clock display
   clockDisplay.textContent = clock.toFixed(1);
   sliderFill.style.width = `${t * 100}%`;
+
+  // Also update side clock display
+  const clockSide = document.getElementById('clockSideDisplay');
+  if (clockSide) clockSide.textContent = clock.toFixed(1);
 
   // Phase transition — data-phase attribute for CSS effects, NO body.className color changes
   const phaseChanged = phase.cls !== currentPhase;
@@ -1694,24 +1830,37 @@ function updateAll(clock) {
   // Calorie Overclock Banner — 3.0 GHz 이상에서 표시
   overclockBanner.classList.toggle('visible', clock >= 3.0 && !isShuttingDown);
 
-  // Weight loss ticker
+  // Warning background flood — OVERDRIVE+ 에서 배경 경고 텍스트
+  const warningFlood = document.getElementById('warningBgFlood');
+  warningFlood.classList.toggle('active', clock >= 3.0 && !isShuttingDown);
+
+  // Weight loss ticker — active at any overclock > 1.0
   const weightTicker = document.getElementById('weightLossTicker');
-  if (clock >= 3.0 && !isShuttingDown) {
+  if (clock > 1.0 && !isShuttingDown) {
     weightTicker.classList.add('visible');
-    if (!weightLossInterval) {
-      weightLossValue = 20;
-      weightTicker.textContent = `-${weightLossValue}g`;
+    // Determine speed based on phase
+    let tickSpeed;
+    if (clock >= 4.0) tickSpeed = 250;
+    else if (clock >= 3.0) tickSpeed = 500;
+    else if (clock >= 2.0) tickSpeed = 1000;
+    else tickSpeed = 2000;
+
+    if (!weightLossInterval || currentWeightTickSpeed !== tickSpeed) {
+      if (weightLossInterval) clearInterval(weightLossInterval);
+      currentWeightTickSpeed = tickSpeed;
+      weightTicker.textContent = `LOSING WEIGHT... ${weightLossValue}g`;
       weightLossInterval = setInterval(() => {
         weightLossValue += 1;
-        weightTicker.textContent = `-${weightLossValue}g`;
-      }, 500);
+        weightTicker.textContent = `LOSING WEIGHT... ${weightLossValue}g`;
+      }, tickSpeed);
     }
   } else {
     weightTicker.classList.remove('visible');
     if (weightLossInterval) {
       clearInterval(weightLossInterval);
       weightLossInterval = null;
-      weightLossValue = 20;
+      currentWeightTickSpeed = 0;
+      weightLossValue = 0;
     }
   }
 
