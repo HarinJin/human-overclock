@@ -931,6 +931,147 @@
     pointer-events: all;
   }
 
+  /* ── Reboot overlay ── */
+  .reboot-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: #000;
+    z-index: 2001;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+  }
+
+  .reboot-overlay.active {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  .reboot-text {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 14px;
+    letter-spacing: 6px;
+    color: #00f0ff;
+    opacity: 0;
+    margin-bottom: 24px;
+  }
+
+  .reboot-text.visible {
+    opacity: 1;
+  }
+
+  .reboot-progress-bar {
+    width: 240px;
+    height: 3px;
+    background: rgba(0, 240, 255, 0.1);
+    border-radius: 2px;
+    overflow: hidden;
+    opacity: 0;
+  }
+
+  .reboot-progress-bar.visible {
+    opacity: 1;
+  }
+
+  .reboot-progress-fill {
+    width: 0%;
+    height: 100%;
+    background: #00f0ff;
+    border-radius: 2px;
+    box-shadow: 0 0 10px #00f0ff;
+    transition: width 0.1s linear;
+  }
+
+  .reboot-flicker {
+    animation: rebootFlicker 0.12s steps(2) infinite;
+  }
+
+  @keyframes rebootFlicker {
+    0% { opacity: 1; }
+    50% { opacity: 0; }
+    100% { opacity: 1; }
+  }
+
+  .reboot-screen-flash {
+    animation: screenFlashIn 0.08s steps(2) 3;
+  }
+
+  @keyframes screenFlashIn {
+    0% { opacity: 0; }
+    50% { opacity: 1; }
+    100% { opacity: 0; }
+  }
+
+  /* ── Calorie Overclock Banner ── */
+  .overclock-banner {
+    position: fixed;
+    top: 80px;
+    left: 0;
+    right: 0;
+    z-index: 1500;
+    text-align: center;
+    pointer-events: none;
+    opacity: 0;
+    transform: translateY(-20px) scale(0.9);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+  }
+
+  .overclock-banner.visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+
+  .overclock-banner-text {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 144px;
+    font-weight: 900;
+    letter-spacing: -4px;
+    line-height: 1;
+    color: var(--accent);
+    text-shadow:
+      0 0 60px rgba(var(--accent-rgb), 0.6),
+      0 0 120px rgba(var(--accent-rgb), 0.3),
+      0 0 200px rgba(var(--accent-rgb), 0.15);
+    animation: bannerPulse 1.2s ease-in-out infinite;
+    -webkit-text-stroke: 1px rgba(var(--accent-rgb), 0.4);
+  }
+
+  .overclock-banner-sub {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 16px;
+    letter-spacing: 8px;
+    color: var(--accent);
+    opacity: 0.5;
+    margin-top: 8px;
+  }
+
+  @keyframes bannerPulse {
+    0%, 100% { opacity: 0.85; filter: brightness(1); }
+    50% { opacity: 1; filter: brightness(1.3); }
+  }
+
+  body[data-phase="critical"] .overclock-banner-text {
+    animation: bannerCritical 0.3s steps(2) infinite;
+  }
+
+  @keyframes bannerCritical {
+    0% { opacity: 1; transform: translateX(0); }
+    25% { opacity: 0.6; transform: translateX(-2px); }
+    50% { opacity: 1; transform: translateX(2px); }
+    75% { opacity: 0.4; transform: translateX(-1px); }
+    100% { opacity: 1; transform: translateX(0); }
+  }
+
+  @media (max-width: 768px) {
+    .overclock-banner-text { font-size: 56px; letter-spacing: -2px; }
+    .overclock-banner-sub { font-size: 10px; letter-spacing: 4px; }
+    .overclock-banner { top: 60px; }
+  }
+
   /* ── Glitch text effect ── */
   .glitch-text {
     position: relative;
@@ -1013,6 +1154,20 @@
   <div class="red-flash-overlay"></div>
   <div class="h-glitch"></div>
   <div class="blackout-overlay" id="blackoutOverlay"></div>
+
+  <!-- Reboot overlay -->
+  <div class="reboot-overlay" id="rebootOverlay">
+    <div class="reboot-text" id="rebootText">SYSTEM REBOOTING...</div>
+    <div class="reboot-progress-bar" id="rebootProgressBar">
+      <div class="reboot-progress-fill" id="rebootProgressFill"></div>
+    </div>
+  </div>
+
+  <!-- Calorie Overclock Banner -->
+  <div class="overclock-banner" id="overclockBanner">
+    <div class="overclock-banner-text">칼로리 오버클럭</div>
+    <div class="overclock-banner-sub">CALORIE OVERCLOCK ACTIVE</div>
+  </div>
 
   <div class="main-container">
     <!-- Header -->
@@ -1398,6 +1553,11 @@ const ctx = neuralCanvas.getContext('2d');
 const shutdownContainer = document.getElementById('shutdownContainer');
 const shutdownBtn = document.getElementById('shutdownBtn');
 const blackoutOverlay = document.getElementById('blackoutOverlay');
+const rebootOverlay = document.getElementById('rebootOverlay');
+const rebootText = document.getElementById('rebootText');
+const rebootProgressBar = document.getElementById('rebootProgressBar');
+const rebootProgressFill = document.getElementById('rebootProgressFill');
+const overclockBanner = document.getElementById('overclockBanner');
 const warningTicker = document.getElementById('warningTicker');
 const tickerMessages = document.getElementById('tickerMessages');
 const calorieBarFill = document.getElementById('calorieBarFill');
@@ -1537,6 +1697,9 @@ function updateAll(clock) {
 
   // SHUTDOWN button visibility (Improvement #5)
   shutdownContainer.classList.toggle('visible', clock >= 3.0 && !isShuttingDown);
+
+  // Calorie Overclock Banner — 3.0 GHz 이상에서 표시
+  overclockBanner.classList.toggle('visible', clock >= 3.0 && !isShuttingDown);
 
   // Warning ticker (Improvement #2)
   if (clock >= 3.0 && !tickerActive && !isShuttingDown) {
@@ -1802,22 +1965,20 @@ function updateCalorieUI() {
 
 function triggerAutoShutdown() {
   isShuttingDown = true;
-  addLog({ tag: 'SYS', cls: 'crit', msg: '에너지 고갈 — 강제 셛다운 / Energy depleted — Forced shutdown', msgCls: 'crit-msg' });
+  addLog({ tag: 'SYS', cls: 'crit', msg: '에너지 고갈 — 강제 셧다운 / Energy depleted — Forced shutdown', msgCls: 'crit-msg' });
 
-  // Blackout
   blackoutOverlay.classList.add('active');
 
-  // Drop clock
   animateClockDown(1.0, 1200, () => {
     clockSlider.disabled = true;
-
     setTimeout(() => {
       blackoutOverlay.classList.remove('active');
-      clockSlider.disabled = false;
-      isShuttingDown = false;
-      updateAll(1.0);
-      addLog({ tag: 'SYS', cls: 'sys', msg: '시스템 대기 중 — Standby', msgCls: '' });
-    }, 3000);
+      playRebootSequence(() => {
+        clockSlider.disabled = false;
+        isShuttingDown = false;
+        updateAll(1.0);
+      });
+    }, 1500);
   });
 }
 
@@ -1827,13 +1988,14 @@ function triggerAutoShutdown() {
 function triggerShutdown() {
   isShuttingDown = true;
   shutdownContainer.classList.remove('visible');
+  overclockBanner.classList.remove('visible');
 
   // 1. Blackout
   blackoutOverlay.classList.add('active');
 
   // 2. Log shutdown sequence
   const shutdownMsgs = [
-    { tag: 'SYS', cls: 'crit', msg: '긴급 셛다운 요청 수신 — Emergency shutdown initiated', msgCls: 'crit-msg' },
+    { tag: 'SYS', cls: 'crit', msg: '긴급 셧다운 요청 수신 — Emergency shutdown initiated', msgCls: 'crit-msg' },
     { tag: 'SYS', cls: 'warn', msg: `뉴럴 클럭 감속 중... ${currentClock.toFixed(1)} → 1.0 — Decelerating...`, msgCls: 'warn-msg' },
     { tag: 'SYS', cls: 'warn', msg: '모든 증강 모듈 비활성화 — All enhancement modules: OFF', msgCls: 'warn-msg' },
     { tag: 'SYS', cls: 'sys', msg: '휴면 모드 진입 — Entering hibernation...', msgCls: '' },
@@ -1846,21 +2008,123 @@ function triggerShutdown() {
   // 3. Animate clock down
   setTimeout(() => {
     animateClockDown(1.0, 1500, () => {
-      // 4. Disable slider
       clockSlider.disabled = true;
 
-      // 5. All stats return to baseline handled by updateAll(1.0)
-
-      // 6. After 5s unlock
-      sliderDisabledTimeout = setTimeout(() => {
+      // 4. Hold blackout briefly, then reboot
+      setTimeout(() => {
         blackoutOverlay.classList.remove('active');
-        clockSlider.disabled = false;
-        isShuttingDown = false;
-        updateAll(1.0);
-        addLog({ tag: 'SYS', cls: 'sys', msg: '시스템 대기 중 — Standby', msgCls: '' });
-      }, 5000);
+        playRebootSequence(() => {
+          clockSlider.disabled = false;
+          isShuttingDown = false;
+          updateAll(1.0);
+        });
+      }, 2000);
     });
   }, 400);
+}
+
+// ═══════════════════════════════════════════════════════════
+// REBOOT SEQUENCE — 깜빡거리며 재부팅되는 연출
+// ═══════════════════════════════════════════════════════════
+function playRebootSequence(callback) {
+  const mainContainer = document.querySelector('.main-container');
+  rebootOverlay.classList.add('active');
+  rebootText.textContent = '';
+  rebootText.classList.remove('visible');
+  rebootProgressBar.classList.remove('visible');
+  rebootProgressFill.style.width = '0%';
+
+  // Phase 1: Screen flicker (rapid black/on flashes)
+  let flickerCount = 0;
+  const flickerTotal = 6;
+  const flickerInterval = setInterval(() => {
+    if (flickerCount % 2 === 0) {
+      rebootOverlay.style.background = '#000';
+    } else {
+      rebootOverlay.style.background = 'rgba(0, 240, 255, 0.03)';
+    }
+    flickerCount++;
+    if (flickerCount >= flickerTotal) {
+      clearInterval(flickerInterval);
+      rebootOverlay.style.background = '#000';
+      startRebootText();
+    }
+  }, 100);
+
+  // Phase 2: Boot text appears
+  function startRebootText() {
+    const bootLines = [
+      'NEURAL CORTEX INTERFACE v2.7',
+      'BIOS CHECK... OK',
+      '뉴럴 경로 재초기화 중...',
+      'SYNAPTIC ARRAY: RESET',
+      '감정 모듈 복원 중...',
+      'SYSTEM REBOOTING...',
+    ];
+
+    let lineIdx = 0;
+    rebootText.classList.add('visible');
+
+    const lineTimer = setInterval(() => {
+      if (lineIdx < bootLines.length) {
+        rebootText.textContent = bootLines[lineIdx];
+        rebootText.classList.add('reboot-flicker');
+        setTimeout(() => rebootText.classList.remove('reboot-flicker'), 200);
+        lineIdx++;
+      } else {
+        clearInterval(lineTimer);
+        startRebootProgress();
+      }
+    }, 400);
+  }
+
+  // Phase 3: Progress bar fills
+  function startRebootProgress() {
+    rebootProgressBar.classList.add('visible');
+    let progress = 0;
+
+    const progTimer = setInterval(() => {
+      progress += 2 + Math.random() * 5;
+      if (progress > 100) progress = 100;
+      rebootProgressFill.style.width = progress + '%';
+
+      if (progress >= 100) {
+        clearInterval(progTimer);
+
+        // Phase 4: Final flicker and reveal
+        setTimeout(() => {
+          rebootText.textContent = '시스템 온라인 — SYSTEM ONLINE';
+          rebootText.classList.add('reboot-flicker');
+
+          setTimeout(() => {
+            rebootText.classList.remove('reboot-flicker');
+
+            // Flash the screen a few times then reveal
+            let revealFlicker = 0;
+            const revealTimer = setInterval(() => {
+              rebootOverlay.style.opacity = revealFlicker % 2 === 0 ? '0.3' : '1';
+              revealFlicker++;
+              if (revealFlicker >= 6) {
+                clearInterval(revealTimer);
+                rebootOverlay.classList.remove('active');
+                rebootOverlay.style.opacity = '';
+                rebootOverlay.style.background = '';
+
+                // Add main container flash-in effect
+                mainContainer.classList.add('reboot-screen-flash');
+                setTimeout(() => mainContainer.classList.remove('reboot-screen-flash'), 300);
+
+                addLog({ tag: 'SYS', cls: 'sys', msg: '시스템 재부팅 완료 — System reboot complete', msgCls: '' });
+                addLog({ tag: 'SYS', cls: 'sys', msg: '시스템 대기 중 — Standby', msgCls: '' });
+
+                if (callback) callback();
+              }
+            }, 80);
+          }, 500);
+        }, 400);
+      }
+    }, 50);
+  }
 }
 
 function animateClockDown(target, duration, callback) {
