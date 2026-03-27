@@ -841,6 +841,43 @@
     opacity: 0.6;
   }
 
+  /* ── Feed button ── */
+  .feed-btn {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 9px;
+    letter-spacing: 2px;
+    padding: 8px 4px;
+    width: 100%;
+    background: rgba(0, 255, 136, 0.06);
+    border: 1px solid rgba(0, 255, 136, 0.2);
+    color: #00ff88;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: all 0.3s;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .feed-btn.visible {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .feed-btn:hover {
+    background: rgba(0, 255, 136, 0.15);
+    border-color: rgba(0, 255, 136, 0.5);
+    box-shadow: 0 0 16px rgba(0, 255, 136, 0.2);
+  }
+
+  .feed-btn:active {
+    transform: scale(0.95);
+  }
+
+  .feed-btn.cooldown {
+    opacity: 0.3;
+    pointer-events: none;
+  }
+
   .clock-side-display {
     text-align: center;
     padding: 12px 0;
@@ -1459,6 +1496,7 @@
           <div class="calorie-value" id="calorieValue">2400</div>
           <div class="calorie-kcal">KCAL</div>
           <div class="calorie-percent" id="caloriePercent">100%</div>
+          <button class="feed-btn" id="feedBtn">음식섭취</button>
         </div>
         <div class="clock-side-display">
           <div class="clock-side-value glitch-text" id="clockSideDisplay">1.0</div>
@@ -1765,6 +1803,23 @@ function init() {
 
   shutdownBtn.addEventListener('click', () => {
     if (!isShuttingDown) triggerShutdown();
+  });
+
+  // Feed button — 음식섭취로 칼로리 복원
+  const feedBtn = document.getElementById('feedBtn');
+  feedBtn.addEventListener('click', () => {
+    if (feedBtn.classList.contains('cooldown')) return;
+    // Restore 400 kcal
+    calorieRemaining = Math.min(CALORIE_MAX, calorieRemaining + 400);
+    updateCalorieUI();
+    addLog({ tag: 'SYS', cls: 'sys', msg: '음식 섭취 — 400 kcal 보충 / Nutrient intake: +400 kcal', msgCls: '' });
+    // 3 second cooldown
+    feedBtn.classList.add('cooldown');
+    feedBtn.textContent = '소화중...';
+    setTimeout(() => {
+      feedBtn.classList.remove('cooldown');
+      feedBtn.textContent = '음식섭취';
+    }, 3000);
   });
 }
 
@@ -2194,6 +2249,10 @@ function updateCalorieUI() {
   } else if (percent <= 70) {
     calorieBarFill.classList.add('yellow');
   }
+
+  // Feed button visibility — 칼로리가 줄었을 때만 표시
+  const feedBtn = document.getElementById('feedBtn');
+  feedBtn.classList.toggle('visible', percent < 95);
 }
 
 function triggerAutoShutdown() {
