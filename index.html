@@ -1158,14 +1158,18 @@
   }
 
   .weight-loss-ticker.visible {
-    opacity: 1;
-    animation: weightFloat 2.5s ease-out infinite;
+    opacity: 0.8;
+    animation: weightBlink 2s ease-in-out infinite;
   }
 
-  @keyframes weightFloat {
-    0% { transform: translateY(0); opacity: 1; }
-    70% { opacity: 0.7; }
-    100% { transform: translateY(-20px); opacity: 0; }
+  @keyframes weightBlink {
+    0%, 100% { opacity: 0.8; }
+    40% { opacity: 0.8; }
+    50% { opacity: 0.15; }
+    60% { opacity: 0.8; }
+    85% { opacity: 0.8; }
+    90% { opacity: 0.3; }
+    95% { opacity: 0.8; }
   }
 
   @keyframes bannerPulse {
