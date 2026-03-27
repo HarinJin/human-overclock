@@ -1,0 +1,326 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 320" width="400" height="320" role="img" aria-label="Human brain lateral view - neural overclock diagram">
+
+<defs>
+  <filter id="glow-cyan" x="-50%" y="-50%" width="200%" height="200%">
+    <feGaussianBlur stdDeviation="4" result="blur"/>
+    <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+  </filter>
+  <filter id="glow-amber" x="-50%" y="-50%" width="200%" height="200%">
+    <feGaussianBlur stdDeviation="6" result="blur"/>
+    <feFlood flood-color="#ffae00" flood-opacity="0.3" result="color"/>
+    <feComposite in="color" in2="blur" operator="in" result="colorBlur"/>
+    <feMerge><feMergeNode in="colorBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+  </filter>
+  <filter id="glow-red" x="-50%" y="-50%" width="200%" height="200%">
+    <feGaussianBlur stdDeviation="8" result="blur"/>
+    <feFlood flood-color="#ff0040" flood-opacity="0.4" result="color"/>
+    <feComposite in="color" in2="blur" operator="in" result="colorBlur"/>
+    <feMerge><feMergeNode in="colorBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+  </filter>
+  <filter id="glitch-distort">
+    <feTurbulence type="turbulence" baseFrequency="0.05" numOctaves="2" result="turbulence"/>
+    <feDisplacementMap in="SourceGraphic" in2="turbulence" scale="3"/>
+  </filter>
+</defs>
+
+<style>
+  .brain-region {
+    fill: rgba(0, 240, 255, 0.05);
+    stroke: rgba(0, 240, 255, 0.3);
+    stroke-width: 1.5;
+    transition: all 0.5s ease;
+    cursor: pointer;
+  }
+  .brain-region:hover {
+    fill: rgba(0, 240, 255, 0.15);
+    stroke: rgba(0, 240, 255, 0.8);
+  }
+  .brain-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 8px;
+    fill: rgba(0, 240, 255, 0.4);
+    pointer-events: none;
+  }
+  .brain-outline {
+    fill: none;
+    stroke: rgba(0, 240, 255, 0.15);
+    stroke-width: 0.5;
+  }
+  .brain-detail {
+    fill: none;
+    stroke: rgba(0, 240, 255, 0.1);
+    stroke-width: 0.5;
+  }
+  #brain-brainstem {
+    stroke: rgba(0, 255, 136, 0.3);
+    fill: rgba(0, 255, 136, 0.04);
+  }
+  #brain-brainstem:hover {
+    fill: rgba(0, 255, 136, 0.12);
+    stroke: rgba(0, 255, 136, 0.8);
+  }
+</style>
+
+<!-- ============================================================
+     BRAIN LATERAL VIEW (facing LEFT / standard neuroanatomy)
+     Origin: brain sits roughly centered at x=180 y=150
+     ============================================================ -->
+
+<!-- ── FRONTAL LOBE  전두엽 ──────────────────────────────────── -->
+<!-- Large front-top dome: from forehead tip (~x=68,y=158) sweeping
+     over the crown and down to the central sulcus (~x=218,y=92) -->
+<path id="brain-frontal"
+  class="brain-region"
+  d="
+    M 72,162
+    C 62,148  56,130  60,108
+    C 64,86   80,68   100,56
+    C 118,44  142,38  162,38
+    C 182,38  202,44  214,56
+    C 220,62  222,72  218,82
+    C 214,92  206,98  198,104
+    C 188,110 178,114 166,118
+    C 154,122 142,124 132,128
+    C 120,132 110,138 100,146
+    C 90,152  80,158  72,162
+    Z
+  "
+/>
+<text class="brain-label" x="108" y="78">전두엽</text>
+
+<!-- ── PARIETAL LOBE  두정엽 ───────────────────────────────────  -->
+<!-- Top-back band between central sulcus and parieto-occipital sulcus -->
+<path id="brain-parietal"
+  class="brain-region"
+  d="
+    M 218,82
+    C 224,72  230,64  238,62
+    C 252,58  268,64  278,76
+    C 286,86  288,100 284,114
+    C 280,128 270,140 258,148
+    C 248,154 238,158 226,158
+    C 216,158 208,154 202,148
+    C 196,142 194,134 196,124
+    C 198,114 204,106 210,100
+    C 214,96  216,90  218,82
+    Z
+  "
+/>
+<text class="brain-label" x="238" y="96">두정엽</text>
+
+<!-- ── TEMPORAL LOBE  측두엽 ──────────────────────────────────── -->
+<!-- Side/middle: below the lateral sulcus, sweeps forward and back -->
+<path id="brain-temporal"
+  class="brain-region"
+  d="
+    M 72,162
+    C 80,158  90,152  100,146
+    C 110,138 120,132 132,128
+    C 142,124 154,122 166,118
+    C 176,116 186,116 196,118
+    C 204,120 210,126 210,134
+    C 210,142 206,150 200,156
+    C 192,164 182,170 170,174
+    C 158,178 146,180 134,180
+    C 120,180 106,178 94,174
+    C 84,170  76,168  72,162
+    Z
+  "
+/>
+<text class="brain-label" x="120" y="168">측두엽</text>
+
+<!-- ── OCCIPITAL LOBE  후두엽 ──────────────────────────────────  -->
+<!-- Back of the brain: roughly triangular/rounded wedge -->
+<path id="brain-occipital"
+  class="brain-region"
+  d="
+    M 258,148
+    C 270,140 280,128 284,114
+    C 288,100 286,86  278,76
+    C 288,80  298,90  304,104
+    C 310,118 310,136 304,150
+    C 298,164 286,172 274,174
+    C 264,176 254,172 248,164
+    C 244,158 244,152 248,146
+    C 252,142 256,144 258,148
+    Z
+  "
+/>
+<text class="brain-label" x="272" y="148">후두엽</text>
+
+<!-- ── CEREBELLUM  소뇌 ───────────────────────────────────────── -->
+<!-- Bottom-back: rounded lobes with horizontal folia lines -->
+<path id="brain-cerebellum"
+  class="brain-region"
+  d="
+    M 212,192
+    C 216,182 224,176 234,174
+    C 244,172 256,174 268,178
+    C 278,182 286,190 288,200
+    C 290,210 286,220 278,226
+    C 270,232 258,234 246,232
+    C 234,230 224,224 218,216
+    C 213,210 210,202 212,192
+    Z
+  "
+/>
+<!-- Cerebellum folia texture lines -->
+<path class="brain-outline" d="M 220,188 C 232,185 246,185 258,188"/>
+<path class="brain-outline" d="M 217,195 C 230,192 248,192 262,196"/>
+<path class="brain-outline" d="M 216,202 C 230,199 250,199 264,204"/>
+<path class="brain-outline" d="M 217,210 C 230,207 250,207 263,212"/>
+<path class="brain-outline" d="M 220,218 C 232,215 250,215 261,220"/>
+<path class="brain-outline" d="M 226,226 C 237,223 252,223 260,227"/>
+<text class="brain-label" x="228" y="252">소뇌</text>
+
+<!-- ── HIPPOCAMPUS  해마 ───────────────────────────────────────── -->
+<!-- Small curved shape deep inside temporal area -->
+<path id="brain-hippocampus"
+  class="brain-region"
+  d="
+    M 152,148
+    C 148,144 146,138 148,133
+    C 150,128 156,125 162,126
+    C 168,127 172,132 172,138
+    C 172,144 168,150 162,152
+    C 158,154 154,152 152,148
+    Z
+  "
+/>
+<text class="brain-label" x="174" y="142">해마</text>
+
+<!-- ── BRAINSTEM  뇌간 ─────────────────────────────────────────── -->
+<!-- Narrow structure at bottom, connecting downward -->
+<path id="brain-brainstem"
+  class="brain-region"
+  d="
+    M 180,188
+    C 184,180 188,174 190,168
+    C 193,162 194,158 192,154
+    C 190,150 186,148 182,148
+    C 178,148 174,150 172,154
+    C 170,158 170,164 172,170
+    C 174,176 176,182 178,188
+    C 178,196 178,206 176,216
+    C 174,224 172,232 170,240
+    C 168,248 168,256 170,262
+    C 172,266 176,268 180,266
+    C 184,264 186,260 186,254
+    C 186,248 184,242 182,236
+    C 180,228 180,220 180,212
+    C 180,204 180,196 180,188
+    Z
+  "
+/>
+<text class="brain-label" x="188" y="230">뇌간</text>
+
+<!-- ============================================================
+     STRUCTURAL DETAIL LINES
+     ============================================================ -->
+
+<!-- Central sulcus — divides frontal from parietal -->
+<path class="brain-detail"
+  d="
+    M 218,82
+    C 214,90  212,98  212,106
+    C 212,114 214,122 216,130
+    C 218,138 220,146 218,154
+  "
+/>
+
+<!-- Lateral sulcus (Sylvian fissure) — major horizontal fold -->
+<path class="brain-detail"
+  d="
+    M 78,164
+    C 92,156  108,150  126,146
+    C 144,142 162,140  180,140
+    C 196,140 210,142  218,148
+    C 224,152 226,158  224,164
+  "
+/>
+
+<!-- Parieto-occipital sulcus -->
+<path class="brain-detail"
+  d="
+    M 258,148
+    C 256,138 256,126 258,116
+    C 260,108 264,102  268,98
+  "
+/>
+
+<!-- Superior temporal sulcus -->
+<path class="brain-detail"
+  d="
+    M 82,174
+    C 96,170  112,168  130,168
+    C 148,168 164,170  180,172
+    C 196,174 208,176  214,180
+  "
+/>
+
+<!-- Inferior frontal gyrus wrinkle -->
+<path class="brain-detail"
+  d="
+    M 86,132
+    C 96,126  108,122  120,120
+    C 132,118 144,118  154,120
+  "
+/>
+
+<!-- Superior frontal gyrus wrinkle -->
+<path class="brain-detail"
+  d="
+    M 100,96
+    C 112,90  126,86   142,84
+    C 156,82  170,82   182,86
+    C 192,90  200,96   204,104
+  "
+/>
+
+<!-- Precentral gyrus suggestion -->
+<path class="brain-detail"
+  d="
+    M 200,106
+    C 202,118 202,130 200,142
+    C 198,152 196,160 194,166
+  "
+/>
+
+<!-- Postcentral gyrus suggestion -->
+<path class="brain-detail"
+  d="
+    M 228,90
+    C 232,100 234,112 232,124
+    C 230,134 226,144 222,152
+  "
+/>
+
+<!-- Intraparietal sulcus -->
+<path class="brain-detail"
+  d="
+    M 244,104
+    C 250,112 256,122 258,134
+    C 260,144 258,152 254,158
+  "
+/>
+
+<!-- Inferior temporal gyrus suggestion -->
+<path class="brain-detail"
+  d="
+    M 86,184
+    C 100,182 116,181 132,181
+    C 148,181 162,182 176,184
+  "
+/>
+
+<!-- Occipital detail wrinkles -->
+<path class="brain-detail"
+  d="M 290,100 C 296,112 300,126 298,140 C 296,152 290,162 282,168"/>
+<path class="brain-detail"
+  d="M 298,108 C 304,120 306,136 302,150 C 298,162 290,170 280,174"/>
+
+<!-- Brainstem-cerebellum connection line -->
+<path class="brain-outline"
+  d="M 182,196 C 192,198 202,196 212,194"/>
+
+</svg>
