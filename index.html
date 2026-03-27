@@ -1025,6 +1025,21 @@
     transform: translateY(0) scale(1);
   }
 
+  .overclock-banner::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(var(--accent-rgb), 0.04) 2px,
+      rgba(var(--accent-rgb), 0.04) 4px
+    );
+    pointer-events: none;
+    z-index: 1;
+  }
+
   .overclock-banner-text {
     font-family: 'Orbitron', sans-serif;
     font-size: 144px;
@@ -1038,6 +1053,16 @@
       0 0 200px rgba(var(--accent-rgb), 0.15);
     animation: bannerPulse 1.2s ease-in-out infinite;
     -webkit-text-stroke: 1px rgba(var(--accent-rgb), 0.4);
+    position: relative;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 3px,
+      rgba(var(--accent-rgb), 0.06) 3px,
+      rgba(var(--accent-rgb), 0.06) 6px
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
   }
 
   .overclock-banner-sub {
@@ -1049,9 +1074,32 @@
     margin-top: 8px;
   }
 
+  .weight-loss-ticker {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 32px;
+    font-weight: 700;
+    color: #ff2a5e;
+    margin-top: 12px;
+    opacity: 0;
+    transition: opacity 0.3s;
+    text-shadow: 0 0 20px rgba(255, 42, 94, 0.5);
+    letter-spacing: 2px;
+  }
+
+  .weight-loss-ticker.visible {
+    opacity: 1;
+    animation: weightFloat 2s ease-out infinite;
+  }
+
+  @keyframes weightFloat {
+    0% { transform: translateY(0); opacity: 1; }
+    70% { opacity: 0.7; }
+    100% { transform: translateY(-20px); opacity: 0; }
+  }
+
   @keyframes bannerPulse {
-    0%, 100% { opacity: 0.85; filter: brightness(1); }
-    50% { opacity: 1; filter: brightness(1.3); }
+    0%, 100% { opacity: 0.3; filter: brightness(0.8); }
+    50% { opacity: 1; filter: brightness(1.4); }
   }
 
   body[data-phase="critical"] .overclock-banner-text {
@@ -1165,8 +1213,9 @@
 
   <!-- Calorie Overclock Banner -->
   <div class="overclock-banner" id="overclockBanner">
-    <div class="overclock-banner-text">칼로리 오버클럭</div>
-    <div class="overclock-banner-sub">CALORIE OVERCLOCK ACTIVE</div>
+    <div class="overclock-banner-text">CALORIE OVERCLOCK</div>
+    <div class="overclock-banner-sub">NEURAL ENERGY DRAIN ACTIVE</div>
+    <div class="weight-loss-ticker" id="weightLossTicker">-20g</div>
   </div>
 
   <div class="main-container">
@@ -1232,11 +1281,11 @@
       </div>
     </div>
 
-    <!-- Stats Grid -->
-    <section class="stats-grid" id="statsGrid"></section>
-
     <!-- Biometrics -->
     <section class="biometrics" id="biometrics"></section>
+
+    <!-- Stats Grid -->
+    <section class="stats-grid" id="statsGrid"></section>
 
     <!-- Brain Visualization + Calorie Gauge -->
     <section class="brain-section">
@@ -1447,12 +1496,12 @@ function applyInterpolatedColor(clock) {
 
 // ── Config ──
 const STATS = [
-  { id: 'perception', name: 'PERCEPTION', base: 42, maxGain: 55, type: 'positive', icon: '◉' },
-  { id: 'reflex',     name: 'REFLEX',     base: 38, maxGain: 58, type: 'positive', icon: '⚡' },
-  { id: 'logic',      name: 'LOGIC',      base: 55, maxGain: 44, type: 'positive', icon: '◈' },
-  { id: 'memory',     name: 'MEMORY',     base: 60, maxGain: 35, type: 'positive', icon: '⬫' },
-  { id: 'empathy',    name: 'EMPATHY',    base: 75, maxLoss: 68, type: 'negative', icon: '♡' },
-  { id: 'stability',  name: 'STABILITY',  base: 90, maxLoss: 85, type: 'negative', icon: '◎' },
+  { id: 'perception', name: '지각력', base: 42, maxGain: 55, type: 'positive', icon: '◉' },
+  { id: 'reflex',     name: '반사신경', base: 38, maxGain: 58, type: 'positive', icon: '⚡' },
+  { id: 'logic',      name: '논리',   base: 55, maxGain: 44, type: 'positive', icon: '◈' },
+  { id: 'memory',     name: '기억력', base: 60, maxGain: 35, type: 'positive', icon: '⬫' },
+  { id: 'empathy',    name: '공감능력', base: 75, maxLoss: 68, type: 'negative', icon: '♡' },
+  { id: 'stability',  name: '안정성', base: 90, maxLoss: 85, type: 'negative', icon: '◎' },
 ];
 
 const BIOMETRICS = [
@@ -1522,6 +1571,8 @@ let logInterval = null;
 let neuralAnimFrame = null;
 let isShuttingDown = false;
 let sliderDisabledTimeout = null;
+let weightLossValue = 20;
+let weightLossInterval = null;
 
 // Calorie state (Improvement #4)
 const CALORIE_MAX = 2400;
@@ -1700,6 +1751,27 @@ function updateAll(clock) {
 
   // Calorie Overclock Banner — 3.0 GHz 이상에서 표시
   overclockBanner.classList.toggle('visible', clock >= 3.0 && !isShuttingDown);
+
+  // Weight loss ticker
+  const weightTicker = document.getElementById('weightLossTicker');
+  if (clock >= 3.0 && !isShuttingDown) {
+    weightTicker.classList.add('visible');
+    if (!weightLossInterval) {
+      weightLossValue = 20;
+      weightTicker.textContent = `-${weightLossValue}g`;
+      weightLossInterval = setInterval(() => {
+        weightLossValue += 1;
+        weightTicker.textContent = `-${weightLossValue}g`;
+      }, 500);
+    }
+  } else {
+    weightTicker.classList.remove('visible');
+    if (weightLossInterval) {
+      clearInterval(weightLossInterval);
+      weightLossInterval = null;
+      weightLossValue = 20;
+    }
+  }
 
   // Warning ticker (Improvement #2)
   if (clock >= 3.0 && !tickerActive && !isShuttingDown) {
