@@ -1798,6 +1798,19 @@ function buildBiometrics() {
 // ═══════════════════════════════════════════════════════════
 // UPDATE CYCLE
 // ═══════════════════════════════════════════════════════════
+function updateWeightTickerStyle(el) {
+  el.textContent = `LOSING WEIGHT... ${weightLossValue}g`;
+  // Scale: 18px base, grows up to 32px at 200g, caps at 40px
+  const scale = Math.min(40, 18 + weightLossValue * 0.11);
+  const weight = weightLossValue > 80 ? 900 : weightLossValue > 40 ? 700 : 500;
+  el.style.fontSize = scale + 'px';
+  el.style.fontWeight = weight;
+  // Intensify red glow as value grows
+  const glowSize = Math.min(40, 15 + weightLossValue * 0.12);
+  const glowAlpha = Math.min(0.8, 0.4 + weightLossValue * 0.002);
+  el.style.textShadow = `0 0 ${glowSize}px rgba(255, 42, 94, ${glowAlpha})`;
+}
+
 function updateAll(clock) {
   const t = (clock - 1.0) / 4.0; // 0..1
   const phase = getPhase(clock);
@@ -1905,10 +1918,10 @@ function updateAll(clock) {
     if (!weightLossInterval || currentWeightTickSpeed !== tickSpeed) {
       if (weightLossInterval) clearInterval(weightLossInterval);
       currentWeightTickSpeed = tickSpeed;
-      weightTicker.textContent = `LOSING WEIGHT... ${weightLossValue}g`;
+      updateWeightTickerStyle(weightTicker);
       weightLossInterval = setInterval(() => {
         weightLossValue += 1;
-        weightTicker.textContent = `LOSING WEIGHT... ${weightLossValue}g`;
+        updateWeightTickerStyle(weightTicker);
       }, tickSpeed);
     }
   } else {
