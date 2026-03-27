@@ -252,7 +252,7 @@
   /* ── Clock display ── */
   .clock-section {
     text-align: center;
-    margin-bottom: 40px;
+    margin-bottom: 24px;
   }
 
   .clock-value-container {
@@ -304,7 +304,7 @@
 
   /* ── Slider ── */
   .slider-section {
-    margin-bottom: 24px;
+    margin-bottom: 16px;
     padding: 0 20px;
   }
 
@@ -546,7 +546,7 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 16px;
-    margin-bottom: 32px;
+    margin-bottom: 20px;
   }
 
   .stat-card {
@@ -633,39 +633,46 @@
 
   /* ── Brain visualization + Biometrics + Calorie gauge layout ── */
   .brain-section {
-    display: flex;
-    gap: 16px;
-    margin-bottom: 32px;
+    margin-bottom: 20px;
     border: 1px solid rgba(var(--accent-rgb), 0.08);
     padding: 24px;
     position: relative;
+  }
+
+  .brain-section-inner {
+    display: flex;
+    gap: 16px;
     align-items: stretch;
+    width: 100%;
   }
 
   .brain-section-title {
     font-family: 'Orbitron', sans-serif;
-    font-size: 10px;
-    letter-spacing: 3px;
-    opacity: 0.4;
-    position: absolute;
-    top: 12px;
-    left: 16px;
+    font-size: 12px;
+    letter-spacing: 4px;
+    color: var(--accent);
+    opacity: 0.6;
+    width: 100%;
+    text-align: center;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(var(--accent-rgb), 0.08);
+    margin-bottom: 12px;
   }
 
   /* Biometrics: left column inside brain section */
   .bio-panel {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 1fr;
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(4, 1fr);
     gap: 8px;
-    width: 220px;
+    width: 160px;
     flex-shrink: 0;
     align-self: stretch;
   }
 
   .bio-item {
     text-align: center;
-    padding: 14px 8px;
+    padding: 16px 10px;
     background: rgba(var(--accent-rgb), 0.02);
     border: 1px solid rgba(var(--accent-rgb), 0.06);
     transition: all 0.3s;
@@ -686,7 +693,7 @@
 
   .bio-value {
     font-family: 'Orbitron', sans-serif;
-    font-size: 16px;
+    font-size: 18px;
     font-weight: 700;
     transition: color 0.3s;
   }
@@ -870,7 +877,7 @@
   .neural-section {
     border: 1px solid rgba(var(--accent-rgb), 0.08);
     padding: 24px;
-    margin-bottom: 32px;
+    margin-bottom: 16px;
     position: relative;
   }
 
@@ -1083,11 +1090,27 @@
       0deg,
       transparent,
       transparent 2px,
-      rgba(var(--accent-rgb), 0.04) 2px,
-      rgba(var(--accent-rgb), 0.04) 4px
+      rgba(var(--accent-rgb), 0.12) 2px,
+      rgba(var(--accent-rgb), 0.12) 4px
     );
     pointer-events: none;
     z-index: 1;
+  }
+
+  .overclock-banner::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, rgba(var(--accent-rgb), 0.4), transparent);
+    animation: scanlineMove 2s linear infinite;
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  @keyframes scanlineMove {
+    0% { top: 0; }
+    100% { top: 100%; }
   }
 
   .overclock-banner-text {
@@ -1111,8 +1134,6 @@
       rgba(var(--accent-rgb), 0.06) 3px,
       rgba(var(--accent-rgb), 0.06) 6px
     );
-    -webkit-background-clip: text;
-    background-clip: text;
   }
 
   .overclock-banner-sub {
@@ -1217,6 +1238,29 @@
     100% { opacity: 0; }
   }
 
+  /* ── Slider hint ── */
+  .slider-hint {
+    text-align: center;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: var(--accent);
+    opacity: 0.5;
+    margin-bottom: 8px;
+    animation: hintBounce 1.5s ease-in-out infinite;
+    transition: opacity 0.6s ease;
+  }
+
+  .slider-hint.hidden {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  @keyframes hintBounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-4px); }
+  }
+
   /* ── Warning background flood ── */
   .warning-bg-flood {
     position: fixed;
@@ -1241,13 +1285,13 @@
     font-size: 13px;
     line-height: 1.8;
     color: #ff2a5e;
-    opacity: 0.15;
+    opacity: 0.07;
     animation: warningScrollUp 30s linear infinite;
     will-change: transform;
   }
 
   body[data-phase="critical"] .warning-bg-scroll {
-    opacity: 0.2;
+    opacity: 0.12;
     color: #ff0040;
     animation-duration: 15s;
   }
@@ -1262,8 +1306,8 @@
     .stats-grid { grid-template-columns: 1fr; }
     .clock-value { font-size: 64px; }
     .main-container { padding: 16px; }
-    .brain-section { flex-direction: column; }
-    .bio-panel { width: 100%; grid-template-columns: repeat(2, 1fr); }
+    .brain-section-inner { flex-direction: column; }
+    .bio-panel { width: 100%; grid-template-columns: repeat(2, 1fr); grid-template-rows: auto; }
     .calorie-gauge {
       width: 100%;
       flex-direction: row;
@@ -1337,6 +1381,7 @@
     <!-- Brain Visualization + Biometrics + Calorie Gauge (최상단) -->
     <section class="brain-section">
       <div class="brain-section-title" id="brainTitle">뇌 오버클럭 &mdash; 체중 감소중</div>
+      <div class="brain-section-inner">
       <div class="bio-panel" id="biometrics"></div>
       <div class="brain-svg-container" id="brainSvgContainer">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 320" width="400" height="320" role="img" aria-label="Human brain lateral view - neural overclock diagram">
@@ -1417,6 +1462,7 @@
           <div class="clock-side-label">NEURAL CLOCK</div>
         </div>
       </div>
+      </div>
     </section>
 
     <!-- Clock Display -->
@@ -1431,6 +1477,7 @@
 
     <!-- Slider -->
     <section class="slider-section">
+      <div class="slider-hint" id="sliderHint">&#9660; 게이지를 드래그하여 오버클럭 &mdash; DRAG TO OVERCLOCK &#9660;</div>
       <div class="phase-zones">
         <div class="phase-zone standard active" id="zone0"></div>
         <div class="phase-zone enhanced" id="zone1"></div>
@@ -1464,14 +1511,14 @@
       </div>
     </div>
 
-    <!-- Stats Grid -->
-    <section class="stats-grid" id="statsGrid"></section>
-
     <!-- Neural Activity Canvas -->
     <section class="neural-section">
       <div class="neural-title">뉴럴 파형 &mdash; NEURAL ACTIVITY WAVEFORM</div>
       <canvas class="neural-canvas" id="neuralCanvas"></canvas>
     </section>
+
+    <!-- Stats Grid -->
+    <section class="stats-grid" id="statsGrid"></section>
 
     <!-- System Log -->
     <section class="log-section">
@@ -1706,6 +1753,10 @@ function init() {
     const val = parseInt(e.target.value) / 10;
     currentClock = val;
     updateAll(val);
+    // Slider hint visibility
+    const sliderHint = document.getElementById('sliderHint');
+    if (val > 1.0) sliderHint.classList.add('hidden');
+    else sliderHint.classList.remove('hidden');
   });
 
   shutdownBtn.addEventListener('click', () => {
