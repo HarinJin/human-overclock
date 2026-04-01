@@ -78,7 +78,7 @@
 
 body {
   font-family: 'Rajdhani', 'Noto Sans KR', sans-serif;
-  background: var(--bg);
+  background: var(--bg) radial-gradient(circle at 50% 40%, rgba(var(--accent-rgb), 0.04) 0%, transparent 60%);
   color: var(--p1-text);
   min-height: 100vh;
   overflow-x: hidden;

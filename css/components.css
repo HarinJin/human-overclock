@@ -419,20 +419,23 @@ body[data-phase="critical"] .shutdown-btn {
   right: 0;
   background: linear-gradient(to top, #00ff88, #00cc66);
   border-radius: 0 0 3px 3px;
-  transition: height 0.1s linear;
+  transition: height 0.1s linear, background 0.5s ease, box-shadow 0.5s ease;
+  box-shadow: 0 0 8px rgba(0, 255, 136, 0.3);
 }
 
 .calorie-bar-fill.yellow {
   background: linear-gradient(to top, #ffae00, #ffcc44);
+  box-shadow: 0 0 10px rgba(255, 174, 0, 0.4);
 }
 
 .calorie-bar-fill.orange {
   background: linear-gradient(to top, #ff6b35, #ff8855);
+  box-shadow: 0 0 10px rgba(255, 107, 53, 0.4);
 }
 
 .calorie-bar-fill.red {
   background: linear-gradient(to top, #ff0040, #ff3366);
-  box-shadow: 0 0 12px rgba(255, 0, 64, 0.4);
+  box-shadow: 0 0 14px rgba(255, 0, 64, 0.5);
 }
 
 .calorie-value {
