@@ -628,14 +628,13 @@ body[data-phase="critical"] .warning-bg-scroll {
   backdrop-filter: blur(4px);
   pointer-events: auto;
   opacity: 0;
-  transform: scale(0.85) translateY(16px);
-  transition: opacity 0.4s ease, transform 0.4s ease;
+  transition: opacity 0.4s ease;
+  transform-origin: top left;
 }
 
 /* 등장 */
 .neon-popup.visible {
   opacity: 1;
-  transform: scale(1) translateY(0);
   animation: popupBlink 3s ease-in-out infinite;
 }
 
@@ -645,9 +644,8 @@ body[data-phase="critical"] .warning-bg-scroll {
 
 /* 소멸 */
 .neon-popup.dying {
-  opacity: 0;
-  transform: scale(0.7) translateY(-20px);
-  transition: opacity 0.5s ease, transform 0.5s ease;
+  opacity: 0 !important;
+  transition: opacity 0.5s ease;
   pointer-events: none;
 }
 
