@@ -85,6 +85,11 @@ body {
   position: relative;
   line-height: 1.6;
   transition: background-color 0.8s ease;
+  /* 텍스트 드래그 방지 */
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 /* Neutral scanline (no color tint) */

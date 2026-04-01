@@ -207,34 +207,80 @@ input[type="range"]::-webkit-slider-thumb:active {
 }
 
 .shutdown-btn-container.visible {
-  height: 64px;
+  height: auto;
+  min-height: 100px;
   opacity: 1;
+  padding: 16px 0;
 }
 
 .shutdown-btn {
   font-family: 'Orbitron', sans-serif;
-  font-size: 14px;
-  font-weight: 700;
-  letter-spacing: 6px;
+  font-size: 20px;
+  font-weight: 900;
+  letter-spacing: 8px;
   text-transform: uppercase;
-  background: transparent;
-  color: #ff0040;
-  border: 2px solid #ff0040;
-  padding: 14px 48px;
+  background: #ff0040;
+  color: #fff;
+  border: none;
+  padding: 24px 80px;
   cursor: pointer;
   position: relative;
-  transition: all 0.2s;
-  box-shadow: 0 0 20px rgba(255, 0, 64, 0.3), inset 0 0 20px rgba(255, 0, 64, 0.05);
-  animation: shutdownPulse 1.5s ease-in-out infinite;
+  transition: background 0.2s, transform 0.1s;
+  text-shadow: 0 0 12px rgba(255, 255, 255, 0.4);
+  /* 글로우는 ::after 래퍼로 분리 — 버튼 자체는 깜빡이지 않음 */
+  z-index: 1;
+}
+
+/* 사선 경계선 (검정+빨강 교차) — 좌우 15px */
+.shutdown-btn::before {
+  content: '';
+  position: absolute;
+  top: 0; bottom: 0;
+  left: -15px;
+  width: 15px;
+  background: repeating-linear-gradient(
+    -45deg,
+    #ff0040 0px, #ff0040 6px,
+    #000 6px, #000 12px
+  );
+}
+
+.shutdown-btn::after {
+  content: '';
+  position: absolute;
+  top: 0; bottom: 0;
+  right: -15px;
+  width: 15px;
+  background: repeating-linear-gradient(
+    -45deg,
+    #ff0040 0px, #ff0040 6px,
+    #000 6px, #000 12px
+  );
+}
+
+/* 글로우 이펙트 래퍼 — 1초 간격 깜빡임 */
+.shutdown-btn-glow {
+  display: inline-block;
+  position: relative;
+  animation: shutdownGlowBlink 1s ease-in-out infinite;
+}
+
+@keyframes shutdownGlowBlink {
+  0%, 100% { filter: drop-shadow(0 0 20px rgba(255, 0, 64, 0.6)) drop-shadow(0 0 50px rgba(255, 0, 64, 0.3)); }
+  50% { filter: drop-shadow(0 0 4px rgba(255, 0, 64, 0.15)) drop-shadow(0 0 10px rgba(255, 0, 64, 0.05)); }
 }
 
 .shutdown-btn:hover {
-  background: rgba(255, 0, 64, 0.15);
-  box-shadow: 0 0 40px rgba(255, 0, 64, 0.5), inset 0 0 30px rgba(255, 0, 64, 0.1);
+  background: #e60038;
+  transform: scale(1.03);
+}
+
+.shutdown-btn:active {
+  transform: scale(0.97);
 }
 
 .shutdown-btn:focus-visible {
-  outline: 2px solid #ff0040;
+  outline: 2px solid #fff;
   outline-offset: 4px;
 }
 
