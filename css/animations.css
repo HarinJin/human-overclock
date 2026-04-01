@@ -1,0 +1,391 @@
+/* ── Keyframes ── */
+@keyframes pulse {
+  0% { transform: scale(1); opacity: 0.5; }
+  100% { transform: scale(1.8); opacity: 0; }
+}
+
+@keyframes statusBlink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+@keyframes logFadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes cursorBlink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+@keyframes hintBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+@keyframes shutdownPulse {
+  0%, 100% { box-shadow: 0 0 20px rgba(255, 0, 64, 0.3), inset 0 0 20px rgba(255, 0, 64, 0.05); }
+  50% { box-shadow: 0 0 40px rgba(255, 0, 64, 0.6), inset 0 0 30px rgba(255, 0, 64, 0.1); }
+}
+
+@keyframes shutdownFlicker {
+  0% { opacity: 1; }
+  30% { opacity: 0.4; }
+  50% { opacity: 1; }
+  70% { opacity: 0.6; }
+  100% { opacity: 1; }
+}
+
+@keyframes weightBlink {
+  0%, 100% { opacity: 0.8; }
+  40% { opacity: 0.8; }
+  50% { opacity: 0.15; }
+  60% { opacity: 0.8; }
+  85% { opacity: 0.8; }
+  90% { opacity: 0.3; }
+  95% { opacity: 0.8; }
+}
+
+@keyframes bannerPulse {
+  0%, 100% { opacity: 0.3; filter: brightness(0.8); }
+  50% { opacity: 1; filter: brightness(1.4); }
+}
+
+@keyframes bannerCritical {
+  0% { opacity: 1; transform: translateX(0); }
+  25% { opacity: 0.6; transform: translateX(-2px); }
+  50% { opacity: 1; transform: translateX(2px); }
+  75% { opacity: 0.4; transform: translateX(-1px); }
+  100% { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes scanlineMove {
+  0% { top: 0; }
+  100% { top: 100%; }
+}
+
+@keyframes warningScrollUp {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-50%); }
+}
+
+/* ── Glitch overlay ── */
+.glitch-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  pointer-events: none;
+  z-index: 999;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+body[data-phase="critical"] .glitch-overlay {
+  opacity: 1;
+  animation: glitchFlicker 0.15s infinite;
+}
+
+body[data-phase="overdrive"] .glitch-overlay {
+  opacity: 0.4;
+  animation: glitchFlicker 0.3s infinite;
+}
+
+@keyframes glitchFlicker {
+  0% { background: transparent; }
+  5% { background: rgba(255, 0, 64, 0.03); transform: translate(2px, 0); }
+  10% { background: transparent; transform: translate(-1px, 0); }
+  15% { background: rgba(0, 240, 255, 0.02); transform: translate(0, 1px); }
+  20% { background: transparent; transform: translate(0); }
+  80% { background: transparent; }
+  85% { background: rgba(255, 42, 94, 0.04); transform: translate(-2px, 0); }
+  90% { background: transparent; transform: translate(1px, -1px); }
+  100% { background: transparent; transform: translate(0); }
+}
+
+/* ── Red flash overlay ── */
+.red-flash-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: radial-gradient(ellipse at center, rgba(255, 0, 40, 0.6) 0%, rgba(255, 0, 40, 0.3) 50%, transparent 80%);
+  pointer-events: none;
+  z-index: 997;
+  opacity: 0;
+  transition: opacity 0.05s;
+}
+
+body[data-phase="overdrive"] .red-flash-overlay {
+  animation: redFlashOD 0.5s ease-in-out infinite;
+}
+
+body[data-phase="critical"] .red-flash-overlay {
+  animation: redFlashCR 0.15s ease-in-out infinite;
+}
+
+@keyframes redFlashOD {
+  0%, 100% { opacity: 0; }
+  50% { opacity: 0.08; }
+}
+
+@keyframes redFlashCR {
+  0%, 100% { opacity: 0.1; }
+  50% { opacity: 0.2; }
+}
+
+/* ── Screen shake ── */
+body[data-phase="critical"] {
+  animation: screenShake 0.1s infinite;
+}
+
+body[data-phase="overdrive"] {
+  animation: screenShakeMild 0.15s infinite;
+}
+
+@keyframes screenShake {
+  0% { transform: translate(0); }
+  25% { transform: translate(3px, -4px); }
+  50% { transform: translate(-4px, 3px); }
+  75% { transform: translate(3px, 0); }
+  100% { transform: translate(0); }
+}
+
+@keyframes screenShakeMild {
+  0% { transform: translate(0); }
+  25% { transform: translate(1px, -1px); }
+  50% { transform: translate(-1px, 1px); }
+  75% { transform: translate(1px, 0); }
+  100% { transform: translate(0); }
+}
+
+
+/* ── Glitch text effect ── */
+.glitch-text {
+  position: relative;
+}
+
+body[data-phase="critical"] .glitch-text {
+  animation: textGlitch 0.3s infinite;
+}
+
+@keyframes textGlitch {
+  0% { text-shadow: 0 0 40px rgba(255, 0, 64, 0.5); }
+  20% { text-shadow: -2px 0 #ff0040, 2px 0 #00f0ff; }
+  40% { text-shadow: 0 0 40px rgba(255, 0, 64, 0.5); }
+  60% { text-shadow: 2px 0 #ff0040, -2px 0 #00f0ff; }
+  80% { text-shadow: 0 0 40px rgba(255, 0, 64, 0.5); }
+  100% { text-shadow: 0 0 40px rgba(255, 0, 64, 0.5); }
+}
+
+/* Horizontal glitch bar */
+.h-glitch {
+  position: fixed;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--accent);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 1001;
+}
+
+body[data-phase="critical"] .h-glitch {
+  animation: hGlitch 3s infinite;
+}
+
+@keyframes hGlitch {
+  0% { top: 20%; opacity: 0; }
+  1% { opacity: 0.6; }
+  2% { opacity: 0; }
+  40% { top: 60%; opacity: 0; }
+  41% { opacity: 0.4; }
+  42% { opacity: 0; }
+  70% { top: 80%; opacity: 0; }
+  71% { opacity: 0.5; }
+  72% { opacity: 0; }
+  100% { opacity: 0; }
+}
+
+/* ── Blackout overlay ── */
+.blackout-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: #000;
+  z-index: 2000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.8s ease;
+}
+
+.blackout-overlay.active {
+  opacity: 1;
+  pointer-events: all;
+}
+
+/* ── Reboot overlay ── */
+.reboot-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: #000;
+  z-index: 2001;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+
+.reboot-overlay.active {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.reboot-text {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 14px;
+  letter-spacing: 6px;
+  color: var(--accent);
+  opacity: 0;
+  margin-bottom: 24px;
+}
+
+.reboot-text.visible {
+  opacity: 1;
+}
+
+.reboot-progress-bar {
+  width: 240px;
+  height: 3px;
+  background: rgba(var(--accent-rgb), 0.1);
+  border-radius: 2px;
+  overflow: hidden;
+  opacity: 0;
+}
+
+.reboot-progress-bar.visible {
+  opacity: 1;
+}
+
+.reboot-progress-fill {
+  width: 0%;
+  height: 100%;
+  background: var(--accent);
+  border-radius: 2px;
+  box-shadow: 0 0 10px var(--accent);
+  transition: width 0.1s linear;
+}
+
+.reboot-flicker {
+  animation: rebootFlicker 0.12s steps(2) infinite;
+}
+
+@keyframes rebootFlicker {
+  0% { opacity: 1; }
+  50% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+.reboot-screen-flash {
+  animation: screenFlashIn 0.08s steps(2) 3;
+}
+
+@keyframes screenFlashIn {
+  0% { opacity: 0; }
+  50% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+/* ── Brain SVG region animations ── */
+.brain-pulse {
+  animation: brainPulse 2s ease-in-out infinite;
+}
+
+.brain-flicker {
+  animation: brainFlicker 0.3s steps(2) infinite;
+}
+
+.brain-overload {
+  animation: brainOverload 0.12s steps(2) infinite;
+}
+
+.brain-fade {
+  animation: brainFade 3s ease-in-out infinite;
+}
+
+@keyframes brainPulse {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+@keyframes brainFlicker {
+  0% { opacity: 1; }
+  50% { opacity: 0.3; }
+  100% { opacity: 0.9; }
+}
+
+@keyframes brainOverload {
+  0% { opacity: 1; filter: brightness(2); }
+  50% { opacity: 0.2; filter: brightness(0.5); }
+  100% { opacity: 0.8; filter: brightness(1.5); }
+}
+
+@keyframes brainFade {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.1; }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   CRT GRAIN OVERLAY — 오래된 모니터 필름 그레인
+   ═══════════════════════════════════════════════════════════ */
+
+.grain-overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9998;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+  background-size: 256px 256px;
+  animation: grainShift 0.4s steps(6) infinite;
+}
+
+body[data-phase="overdrive"] .grain-overlay {
+  opacity: 0.06;
+}
+
+body[data-phase="critical"] .grain-overlay {
+  opacity: 0.09;
+}
+
+@keyframes grainShift {
+  0% { transform: translate(0, 0); }
+  16% { transform: translate(-2%, -3%); }
+  33% { transform: translate(3%, 1%); }
+  50% { transform: translate(-1%, 3%); }
+  66% { transform: translate(2%, -2%); }
+  83% { transform: translate(-3%, 2%); }
+  100% { transform: translate(1%, -1%); }
+}
+
+/* Global edge glow — 화면 가장자리 네온 빛번짐 */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9997;
+  box-shadow: inset 0 0 120px rgba(232, 236, 240, 0.02);
+  transition: box-shadow 0.8s ease;
+}
+
+body[data-phase="enhanced"]::after {
+  box-shadow: inset 0 0 120px rgba(255, 170, 0, 0.03);
+}
+
+body[data-phase="overdrive"]::after {
+  box-shadow: inset 0 0 100px rgba(255, 42, 94, 0.04);
+}
+
+body[data-phase="critical"]::after {
+  box-shadow: inset 0 0 80px rgba(255, 0, 0, 0.06);
+}

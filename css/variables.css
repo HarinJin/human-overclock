@@ -1,0 +1,91 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Share+Tech+Mono&family=Rajdhani:wght@300;400;500;600;700&family=Noto+Sans+KR:wght@300;400;500;700;900&family=M+PLUS+1p:wght@400;700;800;900&family=Black+Ops+One&family=Oxanium:wght@400;600;700;800&display=swap');
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  /* === PHASE 1: NOMINAL — WHITE BASE === */
+  --p1-bg: #080a10;
+  --p1-primary: #e8ecf0;
+  --p1-primary-dim: rgba(232, 236, 240, 0.08);
+  --p1-primary-glow: rgba(232, 236, 240, 0.35);
+  --p1-accent: #a0b0c0;
+  --p1-text: #e0e4e8;
+  --p1-text-dim: #4a5868;
+  --p1-border: rgba(120, 140, 160, 0.2);
+
+  /* === PHASE 2: ELEVATED — AMBER === */
+  --p2-bg: #0c0a06;
+  --p2-primary: #ffaa00;
+  --p2-primary-dim: rgba(255, 170, 0, 0.10);
+  --p2-primary-glow: rgba(255, 170, 0, 0.5);
+  --p2-accent: #ff8800;
+  --p2-border: rgba(255, 170, 0, 0.2);
+
+  /* === PHASE 3: CRITICAL — RED === */
+  --p3-bg: #0a0406;
+  --p3-primary: #ff2a5e;
+  --p3-primary-dim: rgba(255, 42, 94, 0.10);
+  --p3-primary-glow: rgba(255, 42, 94, 0.5);
+  --p3-accent: #ff0033;
+  --p3-border: rgba(255, 42, 94, 0.25);
+
+  /* === PHASE 4: COLLAPSE === */
+  --p4-primary: #ff0000;
+  --p4-bg: #060000;
+  --p4-glitch-a: #ff0033;
+  --p4-glitch-b: #00ffff;
+
+  /* === ACTIVE (JS swaps these) === */
+  --accent: #e8ecf0;
+  --accent-rgb: 232, 236, 240;
+  --bg: #080a10;
+  --glow: 0 0 20px rgba(232, 236, 240, 0.2);
+
+  /* === NEUTRAL === */
+  --panel-bg: rgba(10, 12, 20, 0.88);
+}
+
+body {
+  font-family: 'Rajdhani', 'Noto Sans KR', sans-serif;
+  background: var(--bg);
+  color: var(--p1-text);
+  min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
+  line-height: 1.6;
+  transition: background-color 0.8s ease;
+}
+
+/* Neutral scanline (no color tint) */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.04) 2px,
+    rgba(0, 0, 0, 0.04) 4px
+  );
+  pointer-events: none;
+  z-index: 1000;
+}
+
+/* === NEON GLOW SYSTEM (GPU-optimized text-shadow) === */
+.glow-white { text-shadow: 0 0 8px var(--p1-primary-glow), 0 0 20px rgba(200, 210, 220, 0.15); }
+.glow-amber { text-shadow: 0 0 8px var(--p2-primary-glow), 0 0 24px rgba(255, 170, 0, 0.2); }
+.glow-red { text-shadow: 0 0 8px var(--p3-primary-glow), 0 0 24px rgba(255, 42, 94, 0.2); }
+.glow-critical { text-shadow: 0 0 10px rgba(255, 0, 0, 0.6), 0 0 30px rgba(255, 0, 0, 0.3), 0 0 60px rgba(255, 0, 0, 0.1); }
+
+/* Border glow via box-shadow */
+.border-glow-white { box-shadow: 0 0 8px rgba(200, 210, 220, 0.08), inset 0 0 8px rgba(200, 210, 220, 0.03); }
+.border-glow-amber { box-shadow: 0 0 12px rgba(255, 170, 0, 0.1), inset 0 0 8px rgba(255, 170, 0, 0.03); }
+.border-glow-red { box-shadow: 0 0 12px rgba(255, 42, 94, 0.12), inset 0 0 8px rgba(255, 42, 94, 0.04); }
+
+/* CJK Display font */
+.cjk-display {
+  font-family: 'M PLUS 1p', sans-serif;
+  font-weight: 900;
+  letter-spacing: 3px;
+}

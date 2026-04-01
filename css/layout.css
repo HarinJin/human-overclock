@@ -1,0 +1,394 @@
+/* ── Container ── */
+.main-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px;
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Header ── */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 0;
+  border-bottom: 1px solid rgba(var(--accent-rgb), 0.15);
+  margin-bottom: 32px;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.system-icon {
+  width: 40px;
+  height: 40px;
+  border: 2px solid var(--accent);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  box-shadow: var(--glow);
+}
+
+.system-icon::before {
+  content: '\2B21';
+  font-size: 18px;
+  color: var(--accent);
+}
+
+.system-icon .pulse-ring {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border: 1px solid var(--accent);
+  border-radius: 50%;
+  animation: pulse 2s ease-out infinite;
+  opacity: 0.5;
+}
+
+.system-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+}
+
+.system-subtitle {
+  font-size: 10px;
+  color: var(--p1-text-dim);
+  letter-spacing: 2px;
+  margin-top: 2px;
+}
+
+.classification {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 5px;
+  color: var(--p1-text-dim);
+  text-shadow: 0 0 6px rgba(200,210,220,0.1);
+}
+
+.header-status {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 11px;
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 8px var(--accent);
+  animation: statusBlink 2s ease-in-out infinite;
+}
+
+.status-label {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 11px;
+  letter-spacing: 2px;
+}
+
+/* ── Clock display ── */
+.clock-section {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.clock-value-container {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 8px;
+}
+
+.clock-value {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 96px;
+  font-weight: 900;
+  letter-spacing: -2px;
+  line-height: 1;
+  color: var(--accent);
+  text-shadow: 0 0 12px var(--p1-primary-glow), 0 0 40px rgba(var(--accent-rgb), 0.3);
+  transition: text-shadow 0.15s;
+}
+
+.clock-unit {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 24px;
+  font-weight: 400;
+  vertical-align: top;
+  margin-left: 4px;
+  opacity: 0.6;
+}
+
+.clock-label {
+  font-size: 10px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  opacity: 0.4;
+  margin-top: 8px;
+  line-height: 1.6;
+}
+
+.phase-badge {
+  display: inline-block;
+  padding: 6px 20px;
+  border: 1px solid var(--accent);
+  font-family: 'Orbitron', sans-serif;
+  font-size: 11px;
+  letter-spacing: 3px;
+  margin-top: 16px;
+  transition: all 0.3s;
+  box-shadow: var(--glow);
+}
+
+/* ── Stats grid ── */
+.stats-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+/* ── Brain visualization + Biometrics + Calorie gauge layout ── */
+.brain-section {
+  margin-bottom: 20px;
+  border: 1px solid rgba(var(--accent-rgb), 0.08);
+  padding: 24px;
+  position: relative;
+}
+
+.brain-section-inner {
+  display: flex;
+  gap: 16px;
+  align-items: stretch;
+  width: 100%;
+}
+
+.brain-section-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 12px;
+  letter-spacing: 4px;
+  color: var(--accent);
+  opacity: 0.6;
+  width: 100%;
+  text-align: center;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(var(--accent-rgb), 0.08);
+  margin-bottom: 12px;
+}
+
+/* Biometrics: left column inside brain section */
+.bio-panel {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: repeat(4, 1fr);
+  gap: 8px;
+  width: 160px;
+  flex-shrink: 0;
+  align-self: stretch;
+}
+
+.bio-item {
+  text-align: center;
+  padding: 16px 10px;
+  background: rgba(var(--accent-rgb), 0.02);
+  border: 1px solid rgba(var(--accent-rgb), 0.06);
+  transition: all 0.3s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.bio-label {
+  font-size: 11px;
+  letter-spacing: 1px;
+  opacity: 0.55;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+  line-height: 1.4;
+}
+
+.bio-value {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  transition: color 0.3s;
+}
+
+.bio-unit {
+  font-size: 11px;
+  opacity: 0.4;
+  margin-left: 2px;
+}
+
+.brain-svg-container {
+  flex: 1;
+  min-height: 280px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+.brain-svg-container svg {
+  max-width: 100%;
+  max-height: 320px;
+  position: relative;
+  z-index: 2;
+}
+
+/* Neural wave canvas — 뇌 SVG 뒤편 배경 */
+.neural-canvas-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  opacity: 0.5;
+}
+
+.right-panel {
+  width: 120px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-self: stretch;
+}
+
+/* ── Neural wave section ── */
+.neural-section {
+  border: 1px solid rgba(var(--accent-rgb), 0.08);
+  padding: 24px;
+  margin-bottom: 16px;
+  position: relative;
+}
+
+.neural-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 10px;
+  letter-spacing: 3px;
+  opacity: 0.4;
+  margin-bottom: 16px;
+}
+
+.neural-canvas {
+  width: 100%;
+  height: 180px;
+  display: block;
+}
+
+/* ── System Log ── */
+.log-section {
+  border: 1px solid rgba(var(--accent-rgb), 0.08);
+  background: rgba(0, 0, 0, 0.4);
+  margin-bottom: 32px;
+}
+
+.log-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  border-bottom: 1px solid rgba(var(--accent-rgb), 0.08);
+  font-family: 'Orbitron', sans-serif;
+  font-size: 10px;
+  letter-spacing: 3px;
+}
+
+.log-header-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.log-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+
+.log-body {
+  padding: 16px;
+  height: 200px;
+  overflow-y: auto;
+  font-size: 11px;
+  font-family: 'Share Tech Mono', monospace;
+  line-height: 1.8;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(var(--accent-rgb), 0.2) transparent;
+}
+
+.log-body::-webkit-scrollbar { width: 4px; }
+.log-body::-webkit-scrollbar-track { background: transparent; }
+.log-body::-webkit-scrollbar-thumb { background: rgba(var(--accent-rgb), 0.2); border-radius: 2px; }
+
+.log-entry {
+  opacity: 0;
+  animation: logFadeIn 0.3s ease forwards;
+}
+
+.log-time { opacity: 0.3; }
+.log-tag { font-weight: 700; }
+.log-tag.sys { color: #00f0ff; }
+.log-tag.warn { color: #ffae00; }
+.log-tag.err { color: #ff2a5e; }
+.log-tag.crit { color: #ff0040; font-weight: 700; }
+.log-msg { opacity: 0.7; }
+.log-msg.warn-msg { color: #ffae00; opacity: 0.9; }
+.log-msg.err-msg { color: #ff2a5e; opacity: 0.9; }
+.log-msg.crit-msg { color: #ff0040; opacity: 1; }
+
+/* ── Footer ── */
+.footer {
+  text-align: center;
+  padding: 24px 0;
+  border-top: 1px solid rgba(var(--accent-rgb), 0.08);
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 3px;
+  opacity: 0.3;
+  line-height: 1.8;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .stats-grid { grid-template-columns: 1fr; }
+  .clock-value { font-size: 64px; }
+  .main-container { padding: 16px; }
+  .brain-section-inner { flex-direction: column; }
+  .bio-panel { width: 100%; grid-template-columns: repeat(2, 1fr); grid-template-rows: auto; }
+  .calorie-gauge {
+    width: 100%;
+    flex-direction: row;
+    min-height: auto;
+  }
+  .calorie-bar-outer {
+    width: auto;
+    min-height: 24px;
+    height: 24px;
+    flex: 1;
+  }
+  .calorie-bar-fill {
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: auto;
+    height: 100%;
+    width: 100%;
+    border-radius: 3px 0 0 3px;
+  }
+  .right-panel { width: 100%; flex-direction: row; }
+  .clock-side-display { flex: 1; }
+  .calorie-gauge { flex: 1; }
+}
