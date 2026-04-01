@@ -1,7 +1,9 @@
 /* ── Stat cards ── */
 .stat-card {
-  background: rgba(var(--accent-rgb), 0.03);
-  border: 1px solid rgba(var(--accent-rgb), 0.08);
+  background: var(--panel-bg-accent);
+  border: 1px solid var(--panel-border);
+  box-shadow: var(--panel-glow);
+  backdrop-filter: var(--panel-backdrop);
   padding: 20px;
   position: relative;
   overflow: hidden;
@@ -46,6 +48,7 @@
   letter-spacing: 3px;
   text-transform: uppercase;
   transition: color 0.3s;
+  text-shadow: var(--text-glow);
 }
 
 .stat-value {
@@ -53,6 +56,7 @@
   font-size: 32px;
   font-weight: 700;
   transition: color 0.3s;
+  text-shadow: var(--text-glow-strong);
 }
 
 .stat-bar-bg {
@@ -247,8 +251,9 @@ body[data-phase="critical"] .shutdown-btn {
 .warning-ticker {
   margin-bottom: 32px;
   padding: 0;
-  background: rgba(255, 42, 94, 0.04);
-  border: 1px solid rgba(255, 42, 94, 0.12);
+  background: rgba(255, 42, 94, 0.06);
+  border: 1px solid rgba(255, 42, 94, 0.3);
+  box-shadow: 0 0 16px rgba(255, 42, 94, 0.06), inset 0 0 16px rgba(255, 42, 94, 0.02);
   height: 0;
   overflow: hidden;
   opacity: 0;
@@ -355,7 +360,7 @@ body[data-phase="critical"] .shutdown-btn {
   flex: 1;
   min-height: 200px;
   background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(var(--accent-rgb), 0.1);
+  border: 1px solid var(--panel-border);
   border-radius: 4px;
   position: relative;
   overflow: hidden;
@@ -445,8 +450,10 @@ body[data-phase="critical"] .shutdown-btn {
 .clock-side-display {
   text-align: center;
   padding: 12px 0;
-  border: 1px solid rgba(var(--accent-rgb), 0.08);
-  background: rgba(var(--accent-rgb), 0.02);
+  border: 1px solid var(--panel-border);
+  background: var(--panel-bg-accent);
+  box-shadow: var(--panel-glow);
+  backdrop-filter: var(--panel-backdrop);
   flex-shrink: 0;
 }
 

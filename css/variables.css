@@ -41,8 +41,39 @@
   --bg: #080a10;
   --glow: 0 0 20px rgba(232, 236, 240, 0.2);
 
-  /* === NEUTRAL === */
-  --panel-bg: rgba(10, 12, 20, 0.88);
+  /* === DESIGN TOKENS (팝업 기반 통합 스타일) === */
+
+  /* Panel — 팝업에서 추출한 패널 기본값 */
+  --panel-bg: rgba(10, 12, 20, 0.92);
+  --panel-bg-accent: rgba(var(--accent-rgb), 0.06);
+  --panel-border: rgba(var(--accent-rgb), 0.25);
+  --panel-border-strong: rgba(var(--accent-rgb), 0.4);
+  --panel-glow-outer: 0 0 16px rgba(var(--accent-rgb), 0.06);
+  --panel-glow-inset: inset 0 0 16px rgba(var(--accent-rgb), 0.025);
+  --panel-glow: var(--panel-glow-outer), var(--panel-glow-inset);
+  --panel-backdrop: blur(4px);
+
+  /* Divider — 패널 내 구분선 */
+  --divider: rgba(var(--accent-rgb), 0.15);
+  --divider-strong: rgba(var(--accent-rgb), 0.25);
+
+  /* Text Glow — 텍스트 네온 발광 */
+  --text-glow: 0 0 8px rgba(var(--accent-rgb), 0.3);
+  --text-glow-strong: 0 0 12px rgba(var(--accent-rgb), 0.4), 0 0 30px rgba(var(--accent-rgb), 0.15);
+
+  /* Spacing */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 12px;
+  --space-lg: 16px;
+  --space-xl: 24px;
+
+  /* Typography */
+  --font-display: 'Orbitron', sans-serif;
+  --font-mono: 'Share Tech Mono', monospace;
+  --font-body: 'Rajdhani', 'Noto Sans KR', sans-serif;
+  --font-cjk: 'M PLUS 1p', sans-serif;
+  --font-impact: 'Black Ops One', cursive;
 }
 
 body {

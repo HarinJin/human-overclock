@@ -13,7 +13,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 16px 0;
-  border-bottom: 1px solid rgba(var(--accent-rgb), 0.15);
+  border-bottom: 1px solid var(--panel-border);
   margin-bottom: 32px;
 }
 
@@ -115,7 +115,7 @@
   letter-spacing: -2px;
   line-height: 1;
   color: var(--accent);
-  text-shadow: 0 0 12px var(--p1-primary-glow), 0 0 40px rgba(var(--accent-rgb), 0.3);
+  text-shadow: var(--text-glow-strong);
   transition: text-shadow 0.15s;
 }
 
@@ -140,7 +140,8 @@
 .phase-badge {
   display: inline-block;
   padding: 6px 20px;
-  border: 1px solid var(--accent);
+  border: 1px solid var(--panel-border-strong);
+  backdrop-filter: var(--panel-backdrop);
   font-family: 'Orbitron', sans-serif;
   font-size: 11px;
   letter-spacing: 3px;
@@ -160,9 +161,12 @@
 /* ── Brain visualization + Biometrics + Calorie gauge layout ── */
 .brain-section {
   margin-bottom: 20px;
-  border: 1px solid rgba(var(--accent-rgb), 0.08);
+  border: 1px solid var(--panel-border);
   padding: 24px;
   position: relative;
+  background: var(--panel-bg-accent);
+  box-shadow: var(--panel-glow);
+  backdrop-filter: var(--panel-backdrop);
 }
 
 .brain-section-inner {
@@ -181,8 +185,9 @@
   width: 100%;
   text-align: center;
   padding: 8px 0;
-  border-bottom: 1px solid rgba(var(--accent-rgb), 0.08);
+  border-bottom: 1px solid var(--divider);
   margin-bottom: 12px;
+  text-shadow: var(--text-glow);
 }
 
 /* Biometrics: left column inside brain section */
@@ -199,8 +204,10 @@
 .bio-item {
   text-align: center;
   padding: 16px 10px;
-  background: rgba(var(--accent-rgb), 0.02);
-  border: 1px solid rgba(var(--accent-rgb), 0.06);
+  background: var(--panel-bg-accent);
+  border: 1px solid var(--panel-border);
+  box-shadow: var(--panel-glow);
+  backdrop-filter: var(--panel-backdrop);
   transition: all 0.3s;
   display: flex;
   flex-direction: column;
@@ -222,6 +229,7 @@
   font-size: 24px;
   font-weight: 700;
   transition: color 0.3s;
+  text-shadow: var(--text-glow);
 }
 
 .bio-unit {
@@ -291,8 +299,10 @@
 
 /* ── System Log ── */
 .log-section {
-  border: 1px solid rgba(var(--accent-rgb), 0.08);
-  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid var(--panel-border);
+  background: var(--panel-bg-accent);
+  box-shadow: var(--panel-glow);
+  backdrop-filter: var(--panel-backdrop);
   margin-bottom: 32px;
 }
 
@@ -301,7 +311,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 12px 16px;
-  border-bottom: 1px solid rgba(var(--accent-rgb), 0.08);
+  border-bottom: 1px solid var(--divider);
   font-family: 'Orbitron', sans-serif;
   font-size: 10px;
   letter-spacing: 3px;
@@ -353,7 +363,7 @@
 .footer {
   text-align: center;
   padding: 24px 0;
-  border-top: 1px solid rgba(var(--accent-rgb), 0.08);
+  border-top: 1px solid var(--divider);
   font-family: 'Share Tech Mono', monospace;
   font-size: 10px;
   letter-spacing: 3px;
