@@ -241,7 +241,7 @@ body[data-phase="critical"] .h-glitch {
 }
 
 .reboot-text {
-  font-family: 'Orbitron', sans-serif;
+  font-family: var(--font-display);
   font-size: 14px;
   letter-spacing: 6px;
   color: var(--accent);

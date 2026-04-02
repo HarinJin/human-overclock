@@ -1,4 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Share+Tech+Mono&family=Rajdhani:wght@300;400;500;600;700&family=Noto+Sans+KR:wght@300;400;500;700;900&family=M+PLUS+1p:wght@400;700;800;900&family=Black+Ops+One&family=Oxanium:wght@400;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Share+Tech+Mono&family=M+PLUS+1p:wght@400;700;800;900&family=Black+Ops+One&display=swap');
+@import url('https://cdn.jsdelivr.net/npm/galmuri@latest/dist/galmuri.css');
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -68,16 +69,33 @@
   --space-lg: 16px;
   --space-xl: 24px;
 
-  /* Typography */
+  /* Typography — Font Families */
   --font-display: 'Orbitron', sans-serif;
-  --font-mono: 'Share Tech Mono', monospace;
-  --font-body: 'Rajdhani', 'Noto Sans KR', sans-serif;
+  --font-mono: 'GalmuriMono11', 'Share Tech Mono', monospace;
+  --font-body: 'Galmuri11', 'Galmuri14', sans-serif;
+  --font-body-lg: 'Galmuri14', 'Galmuri11', sans-serif;
   --font-cjk: 'M PLUS 1p', sans-serif;
   --font-impact: 'Black Ops One', cursive;
+
+  /* Typography — Type Scale (Perfect Fourth 1.333) */
+  --text-xs: 0.625rem;
+  --text-sm: 0.75rem;
+  --text-base: 0.875rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.5rem;
+  --text-2xl: 2rem;
+  --text-3xl: 2.25rem;
+  --text-display: 6rem;
+
+  /* Typography — Letter Spacing Scale */
+  --tracking-tight: -0.02em;
+  --tracking-normal: 0.05em;
+  --tracking-wide: 0.15em;
+  --tracking-wider: 0.25em;
 }
 
 body {
-  font-family: 'Rajdhani', 'Noto Sans KR', sans-serif;
+  font-family: var(--font-body);
   background: var(--bg) radial-gradient(circle at 50% 40%, rgba(var(--accent-rgb), 0.04) 0%, transparent 60%);
   color: var(--p1-text);
   min-height: 100vh;
@@ -121,7 +139,7 @@ body::before {
 
 /* CJK Display font */
 .cjk-display {
-  font-family: 'M PLUS 1p', sans-serif;
+  font-family: var(--font-cjk);
   font-weight: 900;
   letter-spacing: 3px;
 }

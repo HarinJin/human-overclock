@@ -8,6 +8,7 @@ import { addLog, restartLogStream } from './log.js';
 import { updateBrainRegions } from './brain.js';
 import { startTicker, stopTicker } from './ticker.js';
 import { updatePopups } from './popups.js';
+import { STAT_COMMENTS, CALORIE_MILESTONES, CALORIE_WARNINGS, SLIDER_HINTS, BRAIN_TITLES } from './config.js';
 
 export function buildStats() {
   dom.statsGrid.innerHTML = STATS.map(s => `
@@ -43,6 +44,44 @@ export function getPhase(clock) {
   return PHASES[0];
 }
 
+function getStatComment(statId, value) {
+  const comments = STAT_COMMENTS[statId];
+  if (!comments) return '';
+  // For negative stats (empathy, stability): lower value = worse
+  const stat = STATS.find(s => s.id === statId);
+  if (stat && stat.type === 'negative') {
+    for (const c of comments) {
+      if (value <= c.threshold) return c.text;
+    }
+  } else {
+    for (const c of comments) {
+      if (value >= c.threshold) return c.text;
+    }
+  }
+  return '';
+}
+
+function getCalorieMilestone(remaining) {
+  for (const m of CALORIE_MILESTONES) {
+    if (remaining <= m.remaining) return m.text;
+  }
+  return '';
+}
+
+function getSliderHint(clock) {
+  for (const h of SLIDER_HINTS) {
+    if (clock >= h.threshold) return h.text;
+  }
+  return SLIDER_HINTS[SLIDER_HINTS.length - 1].text;
+}
+
+function getBrainTitle(clock) {
+  for (const t of BRAIN_TITLES) {
+    if (clock >= t.threshold) return t.text;
+  }
+  return BRAIN_TITLES[BRAIN_TITLES.length - 1].text;
+}
+
 export function updateWeightTickerStyle(el) {
   el.textContent = `LOSING WEIGHT... ${state.weightLossValue}g`;
   const scale = Math.min(40, 18 + state.weightLossValue * 0.11);
@@ -67,6 +106,26 @@ export function updateCalorieUI() {
 
   const feedBtn = document.getElementById('feedBtn');
   feedBtn.classList.toggle('visible', percent < 95);
+
+  // Calorie milestone text
+  let milestoneEl = document.getElementById('calorieMilestone');
+  if (!milestoneEl) {
+    milestoneEl = document.createElement('div');
+    milestoneEl.id = 'calorieMilestone';
+    milestoneEl.className = 'calorie-milestone';
+    dom.calorieValueEl.parentElement.insertBefore(milestoneEl, dom.calorieValueEl.nextSibling);
+  }
+  const milestone = getCalorieMilestone(state.calorieRemaining);
+  milestoneEl.textContent = milestone;
+
+  // Dynamic feed button text
+  if (percent <= 20) {
+    feedBtn.textContent = '⚠ 긴급 섭취';
+  } else if (percent <= 50) {
+    feedBtn.textContent = '긴급 보충';
+  } else {
+    feedBtn.textContent = '영양 보충';
+  }
 
   // Calorie depletion warning
   const calorieWarnBanner = document.getElementById('banner-caloric');
@@ -127,6 +186,17 @@ export function updateAll(clock) {
     const cardEl = document.getElementById(`card-${s.id}`);
 
     valEl.textContent = value;
+    // Stat comment
+    let commentEl = document.getElementById(`comment-${s.id}`);
+    if (!commentEl) {
+      commentEl = document.createElement('div');
+      commentEl.id = `comment-${s.id}`;
+      commentEl.className = 'stat-comment';
+      cardEl.appendChild(commentEl);
+    }
+    const comment = getStatComment(s.id, value);
+    commentEl.textContent = comment;
+    commentEl.style.display = comment ? 'block' : 'none';
     barEl.style.width = `${Math.min(100, value)}%`;
 
     if (s.type === 'positive') {
@@ -199,6 +269,13 @@ export function updateAll(clock) {
   } else if (clock < 3.0 && state.tickerActive) {
     stopTicker();
   }
+
+  // Dynamic UX text
+  const sliderHint = document.getElementById('sliderHint');
+  if (sliderHint) sliderHint.textContent = getSliderHint(clock);
+
+  const brainTitle = document.getElementById('brainTitle');
+  if (brainTitle) brainTitle.textContent = getBrainTitle(clock);
 
   // Brain regions
   updateBrainRegions(clock);
