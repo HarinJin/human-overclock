@@ -101,7 +101,7 @@ function init() {
 }
 
 // Biometric live update
-setInterval(() => {
+state.biometricsInterval = setInterval(() => {
   if (state.isShuttingDown) return;
   const t = (state.currentClock - 1.0) / 4.0;
   BIOMETRICS.forEach(b => {

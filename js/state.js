@@ -16,6 +16,7 @@ export const state = {
   calorieRemaining: CALORIE_MAX,
   calorieLastTime: performance.now(),
   calorieAnimFrame: null,
+  biometricsInterval: null,
   tickerActive: false,
   tickerInterval: null,
   tickerMsgIndex: 0,

@@ -129,6 +129,10 @@ function playRebootSequence(callback) {
 
 export function triggerShutdown() {
   state.isShuttingDown = true;
+  // Clean up animation frames
+  if (state.neuralAnimFrame) cancelAnimationFrame(state.neuralAnimFrame);
+  if (state.calorieAnimFrame) cancelAnimationFrame(state.calorieAnimFrame);
+  if (state.biometricsInterval) clearInterval(state.biometricsInterval);
   dom.shutdownContainer.classList.remove('visible');
   dom.overclockBanner.classList.remove('visible');
 
@@ -163,6 +167,10 @@ export function triggerShutdown() {
 
 export function triggerAutoShutdown() {
   state.isShuttingDown = true;
+  // Clean up animation frames
+  if (state.neuralAnimFrame) cancelAnimationFrame(state.neuralAnimFrame);
+  if (state.calorieAnimFrame) cancelAnimationFrame(state.calorieAnimFrame);
+  if (state.biometricsInterval) clearInterval(state.biometricsInterval);
   addLog({ tag: 'SYS', cls: 'crit', msg: '에너지 고갈 — 강제 셧다운 / Energy depleted — Forced shutdown', msgCls: 'crit-msg' });
 
   dom.blackoutOverlay.classList.add('active');

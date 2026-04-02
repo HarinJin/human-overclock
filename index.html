@@ -46,13 +46,13 @@
 
   <!-- Emergency Cooldown Button -->
   <div class="emergency-cooldown-container" id="emergencyCooldownContainer">
-    <button class="emergency-cooldown-btn" id="emergencyCooldownBtn">
+    <button class="emergency-cooldown-btn" id="emergencyCooldownBtn" aria-label="긴급 냉각 — 뇌 온도 강제 감소">
       EMERGENCY COOLDOWN
       <span class="btn-cjk">緊急冷却</span>
     </button>
   </div>
 
-  <div class="main-container">
+  <main class="main-container">
     <!-- Header -->
     <header class="header">
       <div class="header-left">
@@ -61,12 +61,12 @@
         </div>
         <div>
           <div class="classification">CLASSIFIED // 망상 아카이브 // INTERNAL</div>
-          <div class="system-title">PROJECT ΝΕURON</div>
+          <h1 class="system-title">PROJECT ΝΕURON</h1>
           <div class="system-subtitle">뇌 오버클럭 — CORTEX ENHANCEMENT PROTOCOL v2.7</div>
         </div>
       </div>
       <div class="header-status">
-        <div class="status-dot" id="statusDot"></div>
+        <div class="status-dot" id="statusDot" role="status" aria-label="시스템 상태 표시"></div>
         <span class="status-label" id="statusLabel">ONLINE</span>
       </div>
     </header>
@@ -76,7 +76,7 @@
       <div class="log-header">
         <span>시스템 로그 &mdash; SYSTEM LOG</span>
         <div class="log-header-actions">
-          <div class="log-dot" id="logDot" style="background: #e8ecf0;"></div>
+          <div class="log-dot" id="logDot" style="background: #e8ecf0;" role="status" aria-label="로그 활동 표시"></div>
         </div>
       </div>
       <div class="log-body" id="logBody"></div>
@@ -160,7 +160,7 @@
           <div class="calorie-value" id="calorieValue">2400</div>
           <div class="calorie-kcal">KCAL</div>
           <div class="calorie-percent" id="caloriePercent">100%</div>
-          <button class="feed-btn" id="feedBtn">영양 보충</button>
+          <button class="feed-btn" id="feedBtn" aria-label="영양 보충 — 400 kcal 복원">영양 보충</button>
         </div>
         <div class="clock-side-display">
           <div class="clock-side-value glitch-text" id="clockSideDisplay">1.0</div>
@@ -215,7 +215,7 @@
     <!-- SHUTDOWN Button -->
     <div class="shutdown-btn-container" id="shutdownContainer">
       <div class="shutdown-btn-glow">
-        <button class="shutdown-btn" id="shutdownBtn">긴급 정지 — 뇌 클럭 강제 감속</button>
+        <button class="shutdown-btn" id="shutdownBtn" aria-label="긴급 정지 — 뇌 클럭 강제 감속">긴급 정지 — 뇌 클럭 강제 감속</button>
       </div>
     </div>
 
@@ -237,7 +237,7 @@
       DESIGN: KEZ_WORKS — APRIL 2026<br><br>
       "인간의 뇌를 기계처럼 다룬다는 것은, 결국 인간을 부품으로 본다는 뜻이다."
     </footer>
-  </div>
+  </main>
 
 <script type="module" src="js/main.js"></script>
 </body>

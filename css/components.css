@@ -27,7 +27,7 @@
 }
 
 .stat-card.warning {
-  border-color: rgba(255, 42, 94, 0.3);
+  border-color: var(--p3-border);
   background: rgba(255, 42, 94, 0.03);
 }
 
@@ -82,7 +82,7 @@
   transition: color 0.3s;
 }
 
-.stat-delta.positive { color: #00ff88; opacity: 0.8; }
+.stat-delta.positive { color: #00ff88; opacity: 0.8; text-shadow: 0 0 6px rgba(0, 255, 136, 0.3); }
 .stat-delta.negative { color: #ff2a5e; opacity: 0.8; }
 
 .stat-comment {
@@ -197,10 +197,10 @@ input[type="range"]::-webkit-slider-thumb:active {
 }
 
 .phase-zone.active { opacity: 1; }
-.phase-zone.standard { background: #e8ecf0; }
-.phase-zone.enhanced { background: #ffae00; }
+.phase-zone.standard { background: var(--p1-primary); }
+.phase-zone.enhanced { background: var(--p2-primary); }
 .phase-zone.overdrive { background: #ff6b35; }
-.phase-zone.critical { background: #ff0040; }
+.phase-zone.critical { background: var(--p4-primary); }
 
 /* ── Slider hint ── */
 .slider-hint {
@@ -243,8 +243,8 @@ input[type="range"]::-webkit-slider-thumb:active {
   font-weight: 900;
   letter-spacing: 8px;
   text-transform: uppercase;
-  background: #ff0040;
-  color: #fff;
+  background: var(--p4-primary);
+  color: var(--p1-primary);
   border: none;
   padding: 24px 80px;
   cursor: pointer;
@@ -264,7 +264,7 @@ input[type="range"]::-webkit-slider-thumb:active {
   width: 15px;
   background: repeating-linear-gradient(
     -45deg,
-    #ff0040 0px, #ff0040 6px,
+    var(--p4-primary) 0px, var(--p4-primary) 6px,
     #000 6px, #000 12px
   );
 }
@@ -277,7 +277,7 @@ input[type="range"]::-webkit-slider-thumb:active {
   width: 15px;
   background: repeating-linear-gradient(
     -45deg,
-    #ff0040 0px, #ff0040 6px,
+    var(--p4-primary) 0px, var(--p4-primary) 6px,
     #000 6px, #000 12px
   );
 }
@@ -295,7 +295,7 @@ input[type="range"]::-webkit-slider-thumb:active {
 }
 
 .shutdown-btn:hover {
-  background: #e60038;
+  background: var(--p3-primary);
   transform: scale(1.03);
 }
 
@@ -304,7 +304,7 @@ input[type="range"]::-webkit-slider-thumb:active {
 }
 
 .shutdown-btn:focus-visible {
-  outline: 2px solid #fff;
+  outline: 2px solid var(--p1-primary);
   outline-offset: 4px;
 }
 
@@ -487,7 +487,7 @@ body[data-phase="critical"] .shutdown-btn {
   font-family: var(--font-body);
   font-size: var(--text-xs);
   letter-spacing: 2px;
-  padding: 8px 4px;
+  padding: 12px 4px; min-height: 44px;
   width: 100%;
   background: rgba(0, 255, 136, 0.06);
   border: 1px solid rgba(0, 255, 136, 0.2);
@@ -630,7 +630,7 @@ body[data-phase="critical"] .shutdown-btn {
   font-family: var(--font-display);
   font-size: var(--text-lg);
   font-weight: 500;
-  color: #ff2a5e;
+  color: var(--p3-primary);
   margin-top: 10px;
   opacity: 0;
   transition: opacity 0.3s;
@@ -676,7 +676,7 @@ body[data-phase="critical"] .overclock-banner-text {
   font-family: var(--font-mono);
   font-size: var(--text-sm);
   line-height: 1.8;
-  color: #ff2a5e;
+  color: var(--p3-primary);
   opacity: 0.07;
   animation: warningScrollUp 30s linear infinite;
   will-change: transform;
@@ -684,7 +684,7 @@ body[data-phase="critical"] .overclock-banner-text {
 
 body[data-phase="critical"] .warning-bg-scroll {
   opacity: 0.12;
-  color: #ff0040;
+  color: var(--p4-primary);
   animation-duration: 15s;
 }
 
