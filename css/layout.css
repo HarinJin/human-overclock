@@ -240,10 +240,10 @@
 .brain-svg-container::after {
   content: '';
   position: absolute;
-  /* SVG viewBox 400x320 기준, 뇌가 약 x:60~310, y:30~270에 위치 */
-  top: 5%;
-  left: 10%;
-  width: 65%;
+  /* SVG 뇌 영역 매칭 (iter4) */
+  top: 10%;
+  left: 16%;
+  width: 62%;
   height: 80%;
   background: url('../assets/brain-hologram.png') center center / contain no-repeat;
   mix-blend-mode: screen;
