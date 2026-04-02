@@ -10,28 +10,6 @@
 <link rel="stylesheet" href="css/animations.css">
 </head>
 <body data-phase="standard">
-  <!-- SVG Barrel Distortion Filter (CRT Curve) -->
-  <svg width="0" height="0" style="position:absolute">
-    <defs>
-      <filter id="crt-barrel" x="-5%" y="-5%" width="110%" height="110%">
-        <feImage id="crt-disp-img" result="disp"
-          href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cdefs%3E%3CradialGradient id='g'%3E%3Cstop offset='0%25' stop-color='%23808080'/%3E%3Cstop offset='100%25' stop-color='%23606060'/%3E%3C/radialGradient%3E%3C/defs%3E%3Crect fill='url(%23g)' width='300' height='300'/%3E%3C/svg%3E"
-        />
-        <feDisplacementMap in="SourceGraphic" in2="disp" scale="0" xChannelSelector="R" yChannelSelector="G" id="crt-disp-map"/>
-      </filter>
-    </defs>
-  </svg>
-
-  <!-- CRT Curve Control Panel -->
-  <div class="crt-control" id="crtControl">
-    <label class="crt-control-label">CRT CURVE</label>
-    <input type="range" id="crtCurveSlider" min="0" max="60" value="0" step="1" class="crt-curve-slider">
-    <span class="crt-curve-value" id="crtCurveValue">0</span>
-  </div>
-
-  <!-- CRT Vignette (curve active 시) -->
-  <div class="crt-vignette" id="crtVignette"></div>
-
   <!-- CRT Grain Overlay -->
   <div class="grain-overlay"></div>
   <div class="glitch-overlay"></div>
