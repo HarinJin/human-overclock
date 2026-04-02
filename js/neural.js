@@ -31,9 +31,9 @@ export function startNeuralWave() {
 
     // 파형 레이어 — 뇌 뒤편에 은은하게
     const layers = [
-      { amp: 15 + t * 40, freq: 0.015, speed: 0.025, alpha: 0.4 },
-      { amp: 8 + t * 25,  freq: 0.035, speed: 0.04,  alpha: 0.2 },
-      { amp: 4 + t * 18,  freq: 0.06,  speed: 0.06,  alpha: 0.1 },
+      { amp: 20 + t * 52, freq: 0.015, speed: 0.025, alpha: 0.8 },
+      { amp: 10 + t * 33, freq: 0.035, speed: 0.04,  alpha: 0.45 },
+      { amp: 5 + t * 24,  freq: 0.06,  speed: 0.06,  alpha: 0.25 },
     ];
 
     layers.forEach(layer => {

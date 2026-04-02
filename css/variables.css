@@ -1,5 +1,30 @@
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Share+Tech+Mono&family=M+PLUS+1p:wght@400;700;800;900&family=Black+Ops+One&display=swap');
-@import url('https://cdn.jsdelivr.net/npm/galmuri@latest/dist/galmuri.css');
+
+/* Galmuri 폰트 — 로컬 파일 직접 로드 */
+@font-face {
+  font-family: 'Galmuri11';
+  src: url('../assets/fonts/Galmuri11.ttf') format('truetype');
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Galmuri11';
+  src: url('../assets/fonts/Galmuri11-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Galmuri14';
+  src: url('../assets/fonts/Galmuri14.ttf') format('truetype');
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'GalmuriMono11';
+  src: url('../assets/fonts/GalmuriMono11.ttf') format('truetype');
+  font-weight: 400;
+  font-display: swap;
+}
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 

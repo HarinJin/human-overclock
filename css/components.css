@@ -43,7 +43,7 @@
 }
 
 .stat-name {
-  font-family: var(--font-display);
+  font-family: var(--font-body);
   font-size: var(--text-sm);
   letter-spacing: 3px;
   text-transform: uppercase;
@@ -205,7 +205,7 @@ input[type="range"]::-webkit-slider-thumb:active {
 /* ── Slider hint ── */
 .slider-hint {
   text-align: center;
-  font-family: var(--font-display);
+  font-family: var(--font-body);
   font-size: var(--text-sm);
   letter-spacing: 3px;
   color: var(--accent);
@@ -417,7 +417,7 @@ body[data-phase="critical"] .shutdown-btn {
 }
 
 .calorie-label {
-  font-family: var(--font-display);
+  font-family: var(--font-body);
   font-size: var(--text-xs);
   letter-spacing: 2px;
   opacity: 0.5;
@@ -426,7 +426,7 @@ body[data-phase="critical"] .shutdown-btn {
 }
 
 .calorie-bar-outer {
-  width: 24px;
+  width: 36px;
   flex: 1;
   min-height: 200px;
   background: rgba(255, 255, 255, 0.04);
@@ -484,7 +484,7 @@ body[data-phase="critical"] .shutdown-btn {
 
 /* ── Feed button ── */
 .feed-btn {
-  font-family: var(--font-display);
+  font-family: var(--font-body);
   font-size: var(--text-xs);
   letter-spacing: 2px;
   padding: 8px 4px;
@@ -1030,7 +1030,7 @@ body[data-phase="critical"] .warning-bg-scroll {
 }
 
 .emergency-cooldown-btn {
-  font-family: var(--font-display);
+  font-family: var(--font-body);
   font-size: var(--text-sm);
   font-weight: 700;
   letter-spacing: 4px;

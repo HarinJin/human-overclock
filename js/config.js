@@ -101,7 +101,7 @@ export const BRAIN_TITLES = [
 ];
 
 export const BIOMETRICS = [
-  { id: 'heartRate',  name: '심박수 HEART RATE',   base: 72,   unit: 'BPM',   calc: (t) => Math.round(72 + t * 48 + Math.sin(Date.now() / 500) * 3) },
+  { id: 'heartRate',  name: '심박수 HEART RATE',   base: 72,   unit: 'BPM',   calc: (t) => Math.round(72 + t * 128 + Math.sin(Date.now() / 500) * 5) },
   { id: 'cortisol',   name: '코르티솔 CORTISOL',     base: 12,   unit: 'μg/dL', calc: (t) => (12 + t * 28).toFixed(1) },
   { id: 'brainTemp',  name: '뇌 온도 BRAIN TEMP',  base: 36.8, unit: '°C',    calc: (t) => (36.8 + t * 2.4).toFixed(1) },
   { id: 'neuralSync', name: '동기화율 SYNC RATE', base: 99.2, unit: '%',     calc: (t) => Math.max(0, (99.2 - t * 42)).toFixed(1) },

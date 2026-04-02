@@ -94,7 +94,7 @@
 }
 
 .status-label {
-  font-family: var(--font-display);
+  font-family: var(--font-body);
   font-size: var(--text-sm);
   letter-spacing: 2px;
 }
@@ -180,7 +180,7 @@
 }
 
 .brain-section-title {
-  font-family: var(--font-display);
+  font-family: var(--font-body);
   font-size: var(--text-sm);
   letter-spacing: 4px;
   color: var(--accent);
@@ -256,7 +256,7 @@
 .brain-svg-container::after {
   content: '';
   position: absolute;
-  inset: 10% 15%;
+  inset: 15% 20%;
   background: url('../assets/brain-hologram.png') center center / contain no-repeat;
   mix-blend-mode: screen;
   opacity: 0.5;
@@ -280,11 +280,11 @@
   width: 100%;
   height: 100%;
   z-index: 1;
-  opacity: 0.5;
+  opacity: 0.85;
 }
 
 .right-panel {
-  width: 120px;
+  width: 160px;
   flex-shrink: 0;
   display: flex;
   flex-direction: column;
@@ -301,7 +301,7 @@
 }
 
 .neural-title {
-  font-family: var(--font-display);
+  font-family: var(--font-body);
   font-size: var(--text-xs);
   letter-spacing: 3px;
   opacity: 0.4;
@@ -329,7 +329,7 @@
   align-items: center;
   padding: 12px 16px;
   border-bottom: 1px solid var(--divider);
-  font-family: var(--font-display);
+  font-family: var(--font-body);
   font-size: var(--text-xs);
   letter-spacing: 3px;
 }

@@ -326,4 +326,8 @@ export function updateAll(clock) {
   else if (clock < 3.0) document.body.style.background = '#0c0a06';
   else if (clock < 4.0) document.body.style.background = '#0a0406';
   else document.body.style.background = '#060000';
+
+  // Themed text color — accent tinted white
+  const textColor = `rgb(${Math.min(255, c.r + Math.round((232 - c.r) * 0.7))}, ${Math.min(255, c.g + Math.round((236 - c.g) * 0.7))}, ${Math.min(255, c.b + Math.round((240 - c.b) * 0.7))})`;
+  document.body.style.color = textColor;
 }
