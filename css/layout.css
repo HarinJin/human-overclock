@@ -236,11 +236,15 @@
   overflow: hidden;
 }
 
-/* 뇌 홀로그램 — screen 블렌딩으로 SVG 영역과 자연스럽게 합성 */
+/* 뇌 홀로그램 — SVG 영역 path와 위치 매칭 */
 .brain-svg-container::after {
   content: '';
   position: absolute;
-  inset: 15% 20%;
+  /* SVG viewBox 400x320 기준, 뇌가 약 x:60~310, y:30~270에 위치 */
+  top: 5%;
+  left: 10%;
+  width: 65%;
+  height: 80%;
   background: url('../assets/brain-hologram.png') center center / contain no-repeat;
   mix-blend-mode: screen;
   opacity: 0.5;
@@ -254,7 +258,7 @@
   max-height: 320px;
   position: relative;
   z-index: 2;
-  opacity: 0.6;
+  opacity: 0.45;
 }
 
 /* Neural wave canvas — 뇌 SVG 뒤편 배경 */
