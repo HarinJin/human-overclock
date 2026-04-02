@@ -110,4 +110,26 @@ state.biometricsInterval = setInterval(() => {
   });
 }, 1000);
 
+// CRT Curve control
+const crtSlider = document.getElementById('crtCurveSlider');
+const crtValue = document.getElementById('crtCurveValue');
+const crtDispMap = document.getElementById('crt-disp-map');
+const crtVignette = document.getElementById('crtVignette');
+
+if (crtSlider && crtDispMap) {
+  crtSlider.addEventListener('input', (e) => {
+    const val = parseInt(e.target.value);
+    crtDispMap.setAttribute('scale', val);
+    if (crtValue) crtValue.textContent = val;
+
+    if (val > 0) {
+      document.body.classList.add('crt-active');
+      if (crtVignette) crtVignette.classList.add('active');
+    } else {
+      document.body.classList.remove('crt-active');
+      if (crtVignette) crtVignette.classList.remove('active');
+    }
+  });
+}
+
 init();

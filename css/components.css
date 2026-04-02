@@ -1081,3 +1081,83 @@ body[data-phase="critical"] .emergency-cooldown-btn {
   50% { opacity: 0.5; }
   100% { opacity: 1; }
 }
+
+/* ═══════════════════════════════════════════════════════════
+   CRT CURVE CONTROL PANEL
+   ═══════════════════════════════════════════════════════════ */
+
+.crt-control {
+  position: fixed;
+  bottom: 16px;
+  right: 16px;
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  background: rgba(0, 0, 0, 0.85);
+  border: 1px solid var(--panel-border);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--accent);
+  letter-spacing: 0.1em;
+  opacity: 0.6;
+  transition: opacity 0.3s;
+}
+
+.crt-control:hover {
+  opacity: 1;
+}
+
+.crt-control-label {
+  white-space: nowrap;
+}
+
+.crt-curve-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 80px;
+  height: 3px;
+  background: rgba(var(--accent-rgb), 0.2);
+  outline: none;
+  cursor: pointer;
+}
+
+.crt-curve-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 10px;
+  height: 10px;
+  background: var(--accent);
+  border-radius: 50%;
+  cursor: grab;
+}
+
+.crt-curve-value {
+  min-width: 18px;
+  text-align: right;
+}
+
+/* CRT Barrel filter — body에 적용 */
+body.crt-active {
+  filter: url(#crt-barrel);
+}
+
+/* CRT edge vignette — 커브 활성 시 가장자리 어둡게 */
+.crt-vignette {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9996;
+  background: radial-gradient(ellipse at center, transparent 60%, rgba(0,0,0,0.4) 100%);
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+
+.crt-vignette.active {
+  opacity: 1;
+}
+
+/* CRT rounded corners — 커브 활성 시 화면 모서리 둥글게 */
+body.crt-active::before {
+  border-radius: 12px;
+}
