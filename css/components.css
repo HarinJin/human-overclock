@@ -3,7 +3,6 @@
   background: var(--panel-bg-accent);
   border: 1px solid var(--panel-border);
   box-shadow: var(--panel-glow);
-  backdrop-filter: var(--panel-backdrop);
   padding: var(--space-md);
   position: relative;
   overflow: hidden;
@@ -109,37 +108,61 @@
   word-break: keep-all;
 }
 
-/* ── Slider ── */
+/* ── Unified Slider ── */
 .slider-section {
   margin-bottom: var(--space-sm);
-  padding: 0 20px;
+  padding: 0 var(--space-lg);
 }
 
-.slider-track {
+.unified-slider {
   position: relative;
   height: 48px;
   display: flex;
   align-items: center;
-}
-
-.slider-bg {
-  position: absolute;
-  width: 100%;
-  height: 4px;
-  background: rgba(255, 255, 255, 0.06);
-  border-radius: 2px;
+  border: 1px solid var(--panel-border);
+  box-shadow: var(--panel-glow);
   overflow: hidden;
 }
 
-.slider-fill {
-  height: 100%;
-  background: var(--accent);
-  border-radius: 2px;
-  transition: background 0.15s;
-  box-shadow: 0 0 12px var(--accent);
+.slider-gradient-bg {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg,
+    var(--p1-primary) 0%,
+    var(--p2-primary) 33%,
+    var(--p3-primary) 66%,
+    var(--p4-primary) 100%
+  );
+  opacity: 0.08;
 }
 
-input[type="range"] {
+.unified-slider .slider-fill {
+  position: absolute;
+  top: 0; left: 0; bottom: 0;
+  background: linear-gradient(90deg,
+    var(--p1-primary) 0%,
+    var(--p2-primary) 33%,
+    var(--p3-primary) 66%,
+    var(--p4-primary) 100%
+  );
+  opacity: 0.25;
+  transition: width 0.15s ease;
+}
+
+.slider-phase-label {
+  position: absolute;
+  width: 100%;
+  text-align: center;
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  letter-spacing: 0.1em;
+  color: var(--accent);
+  text-shadow: var(--text-glow);
+  pointer-events: none;
+  z-index: 2;
+}
+
+.unified-slider input[type="range"] {
   -webkit-appearance: none;
   appearance: none;
   width: 100%;
@@ -147,29 +170,28 @@ input[type="range"] {
   background: transparent;
   cursor: pointer;
   position: relative;
-  z-index: 2;
+  z-index: 3;
 }
 
-input[type="range"]:disabled {
+.unified-slider input[type="range"]:disabled {
   cursor: not-allowed;
   opacity: 0.5;
 }
 
-input[type="range"]::-webkit-slider-thumb {
+.unified-slider input[type="range"]::-webkit-slider-thumb {
   -webkit-appearance: none;
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
+  width: 6px;
+  height: 48px;
   background: var(--accent);
-  border: 3px solid var(--bg);
-  box-shadow: 0 0 20px var(--accent), 0 0 40px rgba(var(--accent-rgb), 0.3);
   cursor: grab;
-  transition: background 0.15s, box-shadow 0.15s;
+  box-shadow: 0 0 12px var(--accent), 0 0 24px rgba(var(--accent-rgb), 0.3);
+  border: none;
+  border-radius: 0;
 }
 
-input[type="range"]::-webkit-slider-thumb:active {
+.unified-slider input[type="range"]::-webkit-slider-thumb:active {
   cursor: grabbing;
-  transform: scale(1.2);
+  background: #fff;
 }
 
 .slider-markers {
@@ -180,27 +202,6 @@ input[type="range"]::-webkit-slider-thumb:active {
   opacity: 0.3;
   letter-spacing: 1px;
 }
-
-/* Phase zones */
-.phase-zones {
-  display: flex;
-  gap: 2px;
-  margin-bottom: 6px;
-  height: 3px;
-}
-
-.phase-zone {
-  flex: 1;
-  border-radius: 1px;
-  opacity: 0.3;
-  transition: opacity 0.3s;
-}
-
-.phase-zone.active { opacity: 1; }
-.phase-zone.standard { background: var(--p1-primary); }
-.phase-zone.enhanced { background: var(--p2-primary); }
-.phase-zone.overdrive { background: #ff6b35; }
-.phase-zone.critical { background: var(--p4-primary); }
 
 /* ── Slider hint ── */
 .slider-hint {
@@ -526,7 +527,6 @@ body[data-phase="critical"] .shutdown-btn {
   border: 1px solid var(--panel-border);
   background: var(--panel-bg-accent);
   box-shadow: var(--panel-glow);
-  backdrop-filter: var(--panel-backdrop);
   flex-shrink: 0;
 }
 
@@ -705,7 +705,7 @@ body[data-phase="critical"] .warning-bg-scroll {
   min-width: 220px;
   max-width: 300px;
   border: 1px solid;
-  backdrop-filter: blur(4px);
+  /* backdrop-filter removed for performance */
   pointer-events: auto;
   opacity: 0;
   transition: opacity 0.4s ease;

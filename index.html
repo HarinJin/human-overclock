@@ -178,22 +178,15 @@
         <span class="clock-unit">GHz</span>
       </div>
       <div class="clock-label">뉴럴 클럭 주파수 — γ파 상당 · NEURAL CLOCK FREQUENCY</div>
-      <div class="phase-badge" id="phaseBadge">PHASE 01 &mdash; 안정 (STANDARD)</div>
     </section>
 
-    <!-- Slider -->
+    <!-- Unified Slider + Phase Display -->
     <section class="slider-section">
       <div class="slider-hint" id="sliderHint">▼ 열량을 소모하여 뇌의 인지능력을 향상시킬 수 있습니다 ▼</div>
-      <div class="phase-zones">
-        <div class="phase-zone standard active" id="zone0"></div>
-        <div class="phase-zone enhanced" id="zone1"></div>
-        <div class="phase-zone overdrive" id="zone2"></div>
-        <div class="phase-zone critical" id="zone3"></div>
-      </div>
-      <div class="slider-track">
-        <div class="slider-bg">
-          <div class="slider-fill" id="sliderFill" style="width: 0%"></div>
-        </div>
+      <div class="unified-slider">
+        <div class="slider-gradient-bg"></div>
+        <div class="slider-fill" id="sliderFill" style="width: 0%"></div>
+        <div class="slider-phase-label" id="sliderPhaseLabel">PHASE 01 — 정상 · 뇌파 안정 · 36.8°C</div>
         <input type="range" id="clockSlider" min="10" max="50" value="10" step="1">
       </div>
       <div class="slider-markers">

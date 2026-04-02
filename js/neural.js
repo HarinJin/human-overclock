@@ -9,10 +9,13 @@ export function startNeuralWave() {
   const ctx = dom.ctx;
   const container = canvas.parentElement;
 
+  let cachedW = 0, cachedH = 0;
   const resize = () => {
     const rect = container.getBoundingClientRect();
-    canvas.width = rect.width * 2;
-    canvas.height = rect.height * 2;
+    cachedW = rect.width;
+    cachedH = rect.height;
+    canvas.width = cachedW * 2;
+    canvas.height = cachedH * 2;
     ctx.setTransform(2, 0, 0, 2, 0, 0);
   };
   resize();
@@ -20,9 +23,8 @@ export function startNeuralWave() {
 
   let time = 0;
   const draw = () => {
-    const rect = container.getBoundingClientRect();
-    const w = rect.width;
-    const h = rect.height;
+    const w = cachedW;
+    const h = cachedH;
     const t = (state.currentClock - 1.0) / 4.0;
     const c = lerpColor(state.currentClock);
     const color = rgbToHex(c.r, c.g, c.b);

@@ -29,7 +29,6 @@ export const dom = {};
 export function initDOM() {
   dom.clockSlider = document.getElementById('clockSlider');
   dom.clockDisplay = document.getElementById('clockDisplay');
-  dom.phaseBadge = document.getElementById('phaseBadge');
   dom.sliderFill = document.getElementById('sliderFill');
   dom.statsGrid = document.getElementById('statsGrid');
   dom.biometrics = document.getElementById('biometrics');

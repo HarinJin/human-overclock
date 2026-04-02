@@ -29,9 +29,9 @@ const POPUP_TEMPLATES = {
 // ── 단계별 설정 ──
 // spawnInterval: 생성 간격(ms), maxActive: 동시 활성 최대, cls: 색상
 const PHASE_CONFIG = [
-  { minTemp: 38.5, maxTemp: 39.5, cls: 'amber',    spawnInterval: 1200, maxActive: 5,  burstMin: 1, burstMax: 2 },
-  { minTemp: 39.5, maxTemp: 40.5, cls: 'red',       spawnInterval: 700,  maxActive: 10, burstMin: 2, burstMax: 4 },
-  { minTemp: 40.5, maxTemp: 42.0, cls: 'critical',  spawnInterval: 400,  maxActive: 15, burstMin: 3, burstMax: 5 },
+  { minTemp: 38.5, maxTemp: 39.5, cls: 'amber',    spawnInterval: 1500, maxActive: 4,  burstMin: 1, burstMax: 2 },
+  { minTemp: 39.5, maxTemp: 40.5, cls: 'red',       spawnInterval: 900,  maxActive: 6,  burstMin: 1, burstMax: 3 },
+  { minTemp: 40.5, maxTemp: 42.0, cls: 'critical',  spawnInterval: 600,  maxActive: 8,  burstMin: 2, burstMax: 3 },
 ];
 
 const POPUP_LIFETIME = 2500; // 2.5초 후 자동 소멸

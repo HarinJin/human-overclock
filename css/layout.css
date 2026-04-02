@@ -17,7 +17,6 @@
   margin-bottom: var(--space-lg);
   background: var(--panel-bg-accent);
   box-shadow: var(--panel-glow);
-  backdrop-filter: var(--panel-backdrop);
 }
 
 .header-left {
@@ -140,19 +139,6 @@
   line-height: 1.6;
 }
 
-.phase-badge {
-  display: inline-block;
-  padding: 6px 20px;
-  border: 1px solid var(--panel-border-strong);
-  backdrop-filter: var(--panel-backdrop);
-  font-family: var(--font-display);
-  font-size: var(--text-sm);
-  letter-spacing: 3px;
-  margin-top: 16px;
-  transition: all 0.3s;
-  box-shadow: var(--glow);
-}
-
 /* ── Stats grid ── */
 .stats-grid {
   display: grid;
@@ -169,7 +155,6 @@
   position: relative;
   background: var(--panel-bg-accent);
   box-shadow: var(--panel-glow);
-  backdrop-filter: var(--panel-backdrop);
 }
 
 .brain-section-inner {
@@ -210,7 +195,6 @@
   background: var(--panel-bg-accent);
   border: 1px solid var(--panel-border);
   box-shadow: var(--panel-glow);
-  backdrop-filter: var(--panel-backdrop);
   transition: all 0.3s;
   display: flex;
   flex-direction: column;
@@ -319,7 +303,6 @@
   border: 1px solid var(--panel-border);
   background: var(--panel-bg-accent);
   box-shadow: var(--panel-glow);
-  backdrop-filter: var(--panel-backdrop);
   margin-bottom: var(--space-md);
 }
 

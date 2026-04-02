@@ -160,15 +160,9 @@ export function updateAll(clock) {
     restartLogStream();
   }
 
-  dom.phaseBadge.textContent = phase.label;
-  dom.phaseBadge.style.borderColor = hex;
-  dom.phaseBadge.style.color = hex;
-  dom.phaseBadge.style.boxShadow = `0 0 20px ${hex}33`;
-
-  const phaseIndex = PHASES.indexOf(phase);
-  for (let i = 0; i < 4; i++) {
-    document.getElementById(`zone${i}`).classList.toggle('active', i <= phaseIndex);
-  }
+  // Update phase label inside unified slider
+  const sliderPhaseLabel = document.getElementById('sliderPhaseLabel');
+  if (sliderPhaseLabel) sliderPhaseLabel.textContent = phase.label;
 
   // Stats
   STATS.forEach(s => {
