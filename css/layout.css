@@ -240,11 +240,12 @@
 .brain-svg-container::after {
   content: '';
   position: absolute;
-  /* SVG 뇌 영역 매칭 (iter4) */
-  top: 10%;
-  left: 16%;
-  width: 62%;
-  height: 80%;
+  /* PNG 뇌 — 센터 정렬 + 15% 확대 */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 58%;
+  height: 71%;
   background: url('../assets/brain-hologram.png') center center / contain no-repeat;
   mix-blend-mode: screen;
   opacity: 0.5;
@@ -254,8 +255,8 @@
 }
 
 .brain-svg-container svg {
-  max-width: 100%;
-  max-height: 320px;
+  max-width: 125%;
+  max-height: 405px;
   position: relative;
   z-index: 2;
   opacity: 0.45;

@@ -4,6 +4,26 @@
 import { state, dom } from './state.js';
 import { addLog } from './log.js';
 import { updateAll } from './ui.js';
+import { startNeuralWave } from './neural.js';
+import { startCalorieDrain } from './calorie.js';
+import { clearAllPopups } from './popups.js';
+import { BIOMETRICS } from './config.js';
+
+function restartSystems() {
+  // 뉴럴 파형 재시작
+  startNeuralWave();
+  // 칼로리 드레인 재시작
+  startCalorieDrain();
+  // 바이오메트릭스 인터벌 재시작
+  state.biometricsInterval = setInterval(() => {
+    if (state.isShuttingDown) return;
+    const t = (state.currentClock - 1.0) / 4.0;
+    BIOMETRICS.forEach(b => {
+      const el = document.getElementById(`bioval-${b.id}`);
+      if (el) el.textContent = b.calc(t);
+    });
+  }, 1000);
+}
 
 function animateClockDown(target, duration, callback) {
   const startClock = state.currentClock;
@@ -129,10 +149,11 @@ function playRebootSequence(callback) {
 
 export function triggerShutdown() {
   state.isShuttingDown = true;
-  // Clean up animation frames
+  // Clean up animation frames + popups
   if (state.neuralAnimFrame) cancelAnimationFrame(state.neuralAnimFrame);
   if (state.calorieAnimFrame) cancelAnimationFrame(state.calorieAnimFrame);
   if (state.biometricsInterval) clearInterval(state.biometricsInterval);
+  clearAllPopups();
   dom.shutdownContainer.classList.remove('visible');
   dom.overclockBanner.classList.remove('visible');
 
@@ -158,6 +179,7 @@ export function triggerShutdown() {
         playRebootSequence(() => {
           dom.clockSlider.disabled = false;
           state.isShuttingDown = false;
+          restartSystems();
           updateAll(1.0);
         });
       }, 2000);
@@ -167,10 +189,11 @@ export function triggerShutdown() {
 
 export function triggerAutoShutdown() {
   state.isShuttingDown = true;
-  // Clean up animation frames
+  // Clean up animation frames + popups
   if (state.neuralAnimFrame) cancelAnimationFrame(state.neuralAnimFrame);
   if (state.calorieAnimFrame) cancelAnimationFrame(state.calorieAnimFrame);
   if (state.biometricsInterval) clearInterval(state.biometricsInterval);
+  clearAllPopups();
   addLog({ tag: 'SYS', cls: 'crit', msg: '에너지 고갈 — 강제 셧다운 / Energy depleted — Forced shutdown', msgCls: 'crit-msg' });
 
   dom.blackoutOverlay.classList.add('active');
@@ -182,6 +205,7 @@ export function triggerAutoShutdown() {
       playRebootSequence(() => {
         dom.clockSlider.disabled = false;
         state.isShuttingDown = false;
+        restartSystems();
         updateAll(1.0);
       });
     }, 1500);
