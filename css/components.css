@@ -708,7 +708,7 @@ body[data-phase="critical"] .warning-bg-scroll {
   max-width: 300px;
   border: 1px solid;
   /* backdrop-filter removed for performance */
-  pointer-events: auto;
+  pointer-events: none;
   opacity: 0;
   transition: opacity 0.4s ease;
   transform-origin: top left;

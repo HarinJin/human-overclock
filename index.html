@@ -171,13 +171,46 @@
       </div>
     </section>
 
-    <!-- Clock Display -->
-    <section class="clock-section">
-      <div class="clock-value-container">
-        <span class="clock-value glitch-text" id="clockDisplay">1.0</span>
-        <span class="clock-unit">GHz</span>
+    <!-- Clock Display — Eva-style dense panel -->
+    <section class="clock-panel">
+      <div class="clock-panel-inner">
+        <!-- Left: labels stacked tight -->
+        <div class="clock-labels">
+          <div class="clock-label-row">
+            <span class="clock-label-tag">演算速度</span>
+            <span class="clock-label-en">NEURAL CLOCK</span>
+          </div>
+          <div class="clock-label-row">
+            <span class="clock-label-tag">脳波周波</span>
+            <span class="clock-label-en">BRAINWAVE FREQ</span>
+          </div>
+          <div class="clock-label-row">
+            <span class="clock-label-tag">核心温度</span>
+            <span class="clock-label-en">CORE TEMP</span>
+          </div>
+        </div>
+        <!-- Center: massive clock value -->
+        <div class="clock-main">
+          <div class="clock-main-value glitch-text" id="clockDisplay">1.0</div>
+          <div class="clock-main-unit">GHz</div>
+        </div>
+        <!-- Right: sub-values stacked -->
+        <div class="clock-sub-values">
+          <div class="clock-sub-row">
+            <span class="clock-sub-val" id="clockWaveHz">12</span>
+            <span class="clock-sub-unit">Hz</span>
+            <span class="clock-sub-type" id="clockWaveType">α波</span>
+          </div>
+          <div class="clock-sub-row">
+            <span class="clock-sub-val" id="clockCoreTemp">36.8</span>
+            <span class="clock-sub-unit">°C</span>
+          </div>
+          <div class="clock-sub-row">
+            <span class="clock-sub-val" id="clockBurnRate">83</span>
+            <span class="clock-sub-unit">kcal/h</span>
+          </div>
+        </div>
       </div>
-      <div class="clock-label">뉴럴 클럭 주파수 — γ파 상당 · NEURAL CLOCK FREQUENCY</div>
     </section>
 
     <!-- Unified Slider + Phase Display -->

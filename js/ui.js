@@ -146,8 +146,29 @@ export function updateAll(clock) {
   dom.clockDisplay.textContent = clock.toFixed(1);
   dom.sliderFill.style.width = `${t * 100}%`;
 
-  const clockSide = document.getElementById('clockSideDisplay');
-  if (clockSide) clockSide.textContent = clock.toFixed(1);
+  // Clock panel sub-values
+  const waveHz = document.getElementById('clockWaveHz');
+  const waveType = document.getElementById('clockWaveType');
+  const coreTemp = document.getElementById('clockCoreTemp');
+  const burnRate = document.getElementById('clockBurnRate');
+
+  if (waveHz) {
+    const hz = Math.round(12 + t * 108); // 12Hz (alpha) → 120Hz (seizure)
+    waveHz.textContent = hz;
+  }
+  if (waveType) {
+    if (clock < 2.0) waveType.textContent = 'α波';
+    else if (clock < 3.0) waveType.textContent = 'β波';
+    else if (clock < 4.0) waveType.textContent = 'γ波';
+    else waveType.textContent = '異常';
+  }
+  if (coreTemp) {
+    coreTemp.textContent = (36.8 + t * 4.2).toFixed(1);
+  }
+  if (burnRate) {
+    const rate = Math.round(83 + t * 2227); // 83 → 2310 kcal/h
+    burnRate.textContent = rate;
+  }
 
   const phaseChanged = phase.cls !== state.currentPhase;
   if (phaseChanged) {
